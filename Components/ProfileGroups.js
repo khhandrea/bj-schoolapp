@@ -9,7 +9,7 @@ import PlusWhite from '../Icons/plusWhite.svg';
 import Search from '../Icons/search.svg';
 import BookMark from '../Icons/bookmark.svg'
 
-const DURATION = 150;
+const DURATION = 0;
 let _number = 20802;
 let _name = '어둠의다크';
 let _rank = 'Zl존';
@@ -22,9 +22,9 @@ export default class ProfileGroups extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            profile: new Animated.Value(200),
-            info: new Animated.Value(40),
-            more: new Animated.Value(40),
+            // profile: new Animated.Value(200),
+            // info: new Animated.Value(40),
+            // more: new Animated.Value(40),
             clicked: 1
         };
 
@@ -41,76 +41,75 @@ export default class ProfileGroups extends Component {
 
     _openProfile() {
         this.setState({ clicked: 1 });
-        Animated.timing(
-            this.state.info, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.more, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.profile, {
-                toValue: 200,
-                duration: DURATION,
-                delay: DURATION + 50,
-            }
-        ).start();
+        // Animated.timing(
+        //     this.state.info, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.more, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.profile, {
+        //         toValue: 200,
+        //         duration: DURATION,
+        //         delay: DURATION + 50,
+        //     }
+        // ).start();
     }
     _openInfo() {
         this.setState({ clicked: 2 });
-        Animated.timing(
-            this.state.profile, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.more, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.info, {
-                toValue: 200,
-                duration: DURATION,
-                delay: DURATION + 50,
-            }
-        ).start();
+        // Animated.timing(
+        //     this.state.profile, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.more, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.info, {
+        //         toValue: 200,
+        //         duration: DURATION,
+        //         delay: DURATION + 50,
+        //     }
+        // ).start();
     }
     _openMore() {
         this.setState({ clicked: 3 });
-        console.log(this.state.clicked);
-        Animated.timing(
-            this.state.profile, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.info, {
-                toValue: 40,
-                duration: DURATION,
-            }
-        ).start();
-        Animated.timing(
-            this.state.more, {
-                toValue: 200,
-                duration: DURATION,
-                delay: DURATION + 50
-            }
-        ).start();
+        // Animated.timing(
+        //     this.state.profile, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.info, {
+        //         toValue: 40,
+        //         duration: DURATION,
+        //     }
+        // ).start();
+        // Animated.timing(
+        //     this.state.more, {
+        //         toValue: 200,
+        //         duration: DURATION,
+        //         delay: DURATION + 50
+        //     }
+        // ).start();
     }
 
     render() {
         return (
             <View style={styles.Container}>
-                <Animated.View style={{ width: this.state.profile, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.clicked == 1 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openProfile()}>
                         <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
@@ -125,7 +124,7 @@ export default class ProfileGroups extends Component {
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.info, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.clicked == 2 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openInfo()}>
                         <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
@@ -142,7 +141,7 @@ export default class ProfileGroups extends Component {
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.more, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.clicked == 3 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openMore()}>
                         <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
@@ -150,9 +149,9 @@ export default class ProfileGroups extends Component {
                             </View>
                             {this.state.clicked == 3 ?
                                 <View style={styles.Content}>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark /></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search /></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite /></TouchableOpacity>
+                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite style={styles.contentValue3} /></TouchableOpacity>
                                 </View> : null}
                         </LinearGradient>
                     </TouchableWithoutFeedback>
@@ -203,8 +202,12 @@ const styles = StyleSheet.create({
         fontFamily: 'nanumbarungothic',
         fontSize: 14,
         color: 'white',
-        paddingBottom: 8,
-        marginTop: 8,
+        paddingBottom: 7,
+        marginTop: 10,
+    },
+    contentValue3: {
+        marginBottom: 8,
+        marginTop: 10,
     },
     BoxContainer: {
         width: '100%',

@@ -65,11 +65,10 @@ export default class BannerScroll extends Component {
                     </ScrollView>
                 </View>
                 <View style={styles.GenreContainer}>
-                    <TouchableWithoutFeedback style={styles.IconButton} onPress={() => this._scrollCtrl(0)}>{this.state.xOffset < SCROLLUNIT ? <TimetableIcon /> : <TimetableIconLight />}</TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.IconButton} onPress={() => this._scrollCtrl(SCROLLUNIT * 2)}>{this.state.xOffset < SCROLLUNIT * 3 ? <MealIcon /> : <MealIconLight />}</TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.IconButton} onPress={() => this._scrollCtrl(SCROLLUNIT * 2)}>{this.state.xOffset > SCROLLUNIT * 1 ? <BusIcon /> : <BusIconLight />}</TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback style={styles.IconButton} onPress={() => this._scrollCtrl(SCROLLUNIT * 4)}>{this.state.xOffset > SCROLLUNIT * 3 ? <StarIcon /> : <StarIconLight />}</TouchableWithoutFeedback>
-
+                    {this.state.xOffset < SCROLLUNIT ? <TimetableIcon /> : <TimetableIconLight />}
+                    {this.state.xOffset < SCROLLUNIT * 3 ? <MealIcon /> : <MealIconLight />}
+                    {this.state.xOffset > SCROLLUNIT * 1 ? <BusIcon /> : <BusIconLight />}
+                    {this.state.xOffset > SCROLLUNIT * 3 ? <StarIcon /> : <StarIconLight />}
 
                 </View>
             </View>
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     ScrollViewHolder: {
-        top: 100,
+        marginTop: 35,
         height: 250,
     },
     ScrollView: {
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         width: 200,
-        top: 150,
+        marginTop: 50,
     },
 
 

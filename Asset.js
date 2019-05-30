@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
-import { View } from 'react-native'
-
-
-
-export const RED = "#FF8282";
-export const BLUE = "#8293FF";
-export const LIGHTRED = "#FCBEC0";
-export const LIGHTBLUE = "#C2C7FB";
-export const GRAY = "#707070";
-export const LIGHTGRAY = "#9E9E9E";
-export const FONTBLACK = "#494D54";
+export const Colors = {
+    red: "#FF8282",
+    blue: "#8293FF",
+    lightRed: "#FCBEC0",
+    lightBlue: "#C2C7FB",
+    gray: "#707070",
+    lightGray: "#9E9E9E",
+    fontBlack: "#494D54",
+}

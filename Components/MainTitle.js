@@ -8,39 +8,45 @@ export default class MainTitle extends Component {
     render() {
         return (
             <View style={styles.Container}>
-                <Text style={styles.SchoolName}>BOJEONG</Text>
-                <Text style={styles.SchoolApp}>SCHOOLAPP</Text>
+                <View style={styles.TextContainer}>
+                    <Text style={styles.SchoolName}>BOJEONG</Text>
+                    <Text style={styles.SchoolApp}>SCHOOLAPP</Text>
+                </View>
                 <TouchableOpacity style={styles.OptionIcon}><Setting /></TouchableOpacity>
             </View>
+
         )
     }
 }
 
 const styles = StyleSheet.create({
     Container: {
-
+        marginTop: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingLeft: 16,
+        paddingRight: 16,
+    },
+    TextContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+        height: 44
     },
     SchoolName: {
-        position: 'absolute',
-        top: 30,
-        left: 16,
         fontSize: 30,
         color: 'white',
         fontFamily: 'segoe-ui'
 
     },
     SchoolApp: {
-        position: 'absolute',
-        top: Platform.OS == "ios" ? 48 : 50,
+        marginLeft: 6,
+        marginBottom: Platform.OS == "android" ? 6 : 4,
         fontSize: 14,
-        left: 156,
         color: '#ffffff80',
         fontFamily: 'segoe-ui'
-
     },
     OptionIcon: {
-        position: 'absolute',
-        right: 16,
-        top: 45,
     }
 })

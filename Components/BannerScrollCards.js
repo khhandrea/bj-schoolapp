@@ -10,7 +10,7 @@ export class Meal extends Component {
         const { mealData } = this.props;
         const mealList = mealData.map(
             (info, index) => (
-                <MyItem data={info} index={index} />
+                <MyItem data={info} index={index} key={index} />
             )
         );
         return (
