@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 80,
+        marginTop: 30,
         marginBottom: 100,
         paddingLeft: 20,
         paddingRight: 20,

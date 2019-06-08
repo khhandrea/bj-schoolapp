@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Dimensions } from 'react-native'
-import { Meal } from './BannerScrollCards';
+import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Dimensions, InteractionManager } from 'react-native'
+import { Meal, Timetable, Notification, Traffic } from './BannerScrollCards';
 import TimetableIcon from '../Icons/timetable.svg';
 import MealIcon from '../Icons/meal.svg';
 import StarIcon from '../Icons/star.svg';
@@ -22,24 +22,47 @@ const MealData = [
     "배추김치",
     "청포도"
 ];
+const Schedule = [
+    "문학1",
+    "수학1",
+    "영어B",
+    "윤리와사상",
+    "체육",
+    "미술",
+    "기하백터"
+];
+const Notifications = [
+    "음악대회\n음악실\n01:20~02:00",
+    "이그나이트보정\n05:50~ 07:00"
+];
+const Bus = [
+    '35',
+    '690',
+    '720'
+];
 
 export default class BannerScroll extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            xOffset: SCROLLUNIT * 2,
+            xOffset: SCROLLUNIT * 2 + ((WIDTH - 318) / 2),
         };
+
     }
     componentDidMount() {
-        this.refs._scrollView.scrollTo({ x: SCROLLUNIT * 2, animated: false });
+        InteractionManager.runAfterInteractions(() => {
+            setTimeout(() => {
+                this.myScroll.scrollTo({ x: SCROLLUNIT * 2 + ((WIDTH - 318) / 2), y: 0, animated: false });
+            }, 1)
+        })
+
     }
 
     _scrollCtrl(_x) {
-        this.refs._scrollView.scrollTo({ x: _x, animated: true });
+        this.myScroll.scrollTo({ x: _x, animated: true });
     }
     _handleScroll(_xOffset) {
-        // console.log(_xOffset);
         this.setState({
             xOffset: _xOffset,
         });
@@ -48,28 +71,22 @@ export default class BannerScroll extends Component {
         return (
             <View style={styles.Container}>
                 <View style={styles.ScrollViewHolder}>
-                    <ScrollView horizontal={true}
-                        style={styles.ScrollView}
-                        showsHorizontalScrollIndicator={false}
-                        overScrollMode={"never"}
-                        ref='_scrollView'
-                        onScroll={event => this._handleScroll(event.nativeEvent.contentOffset.x)}
-                        scrollEventThrottle={16}
-                        nestedScrollEnabled={true}
-                    // pagingEnabled={true}
-                    >
+                    <ScrollView horizontal={true} style={styles.ScrollView} showsHorizontalScrollIndicator={false} overScrollMode={"never"} ref={(ref) => this.myScroll = ref}
+                        onScroll={event => this._handleScroll(event.nativeEvent.contentOffset.x)} scrollEventThrottle={16} nestedScrollEnabled={true}>
+                        <View style={{ width: (WIDTH - 318) / 2 }} />
+                        <Timetable schedule={Schedule} />
                         <Meal mealData={MealData} />
-                        <Meal mealData={MealData} />
-                        <Meal mealData={MealData} />
-                        <Meal mealData={MealData} />
+                        <Traffic bus={Bus} />
+                        <Notification notification={Notifications} />
+                        <View style={{ width: (WIDTH - 318) / 2 }} />
                     </ScrollView>
                 </View>
-                <View style={styles.GenreContainer}>
-                    {this.state.xOffset < SCROLLUNIT ? <TimetableIcon /> : <TimetableIconLight />}
-                    {this.state.xOffset < SCROLLUNIT * 3 ? <MealIcon /> : <MealIconLight />}
-                    {this.state.xOffset > SCROLLUNIT * 1 ? <BusIcon /> : <BusIconLight />}
-                    {this.state.xOffset > SCROLLUNIT * 3 ? <StarIcon /> : <StarIconLight />}
 
+                <View style={styles.GenreContainer}>
+                    <TouchableWithoutFeedback onPress={() => this._scrollCtrl(0)}>{this.state.xOffset < SCROLLUNIT ? <TimetableIcon /> : <TimetableIconLight />}</TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this._scrollCtrl(SCROLLUNIT * 2 + ((WIDTH - 318) / 2))}>{this.state.xOffset < SCROLLUNIT * 3 ? <MealIcon /> : <MealIconLight />}</TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this._scrollCtrl(SCROLLUNIT * 2 + ((WIDTH - 318) / 2))}>{this.state.xOffset > SCROLLUNIT * 1 ? <BusIcon /> : <BusIconLight />}</TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this._scrollCtrl(SCROLLUNIT * 4 + WIDTH - 318)}>{this.state.xOffset > SCROLLUNIT * 3 ? <StarIcon /> : <StarIconLight />}</TouchableWithoutFeedback>
                 </View>
             </View>
         )
@@ -78,17 +95,17 @@ export default class BannerScroll extends Component {
 
 const styles = StyleSheet.create({
     Container: {
-        alignItems: 'center'
+        alignItems: 'center',
     },
     ScrollViewHolder: {
         marginTop: 35,
         height: 250,
+        width: WIDTH
     },
     ScrollView: {
-        flex: 1,
+        width: '100%',
     },
     GenreContainer: {
-        flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',

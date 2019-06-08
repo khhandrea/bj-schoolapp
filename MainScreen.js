@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, StatusBar, Button, AppRegistry, Dimensions, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, StatusBar, Button, AppRegistry, Dimensions, Text, TouchableOpacity, Platform, Modal } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { LinearGradient } from 'expo';
 import Card from './Components/MainCard';
 import MainTitle from './Components/MainTitle';
@@ -8,6 +9,11 @@ import ProfileGroups from './Components/ProfileGroups';
 import ArrowLeft from './Icons/arrowLeft.svg';
 import ArrowRight from './Icons/arrowRight.svg';
 import ArrowDown from './Icons/arrowDown.svg';
+import GoupArrow from './Icons/goUpArrow.svg';
+
+
+
+const STATUSBARHEIGHT = getStatusBarHeight();
 
 let _dday = 24;
 const Tag = [
@@ -20,33 +26,49 @@ const Tag = [
 const Image = [
     "https://i.ytimg.com/vi/X8jcnDCMVN4/maxresdefault.jpg",
     "https://i.ytimg.com/vi/mCprd08bjiA/maxresdefault.jpg"
+];
+const Image2 = [
+    "https://t1.daumcdn.net/cfile/tistory/22144F3A58443EF92E"
 ]
-const Content = "🔥6월 6일까지 출시최저가 할인 🔥 Vue.js는 더 이상 최신 트렌드가 아닙니다.프론트엔드 개발자라면 가져야 하는 생존기술이 됐습니다.프레임워크를 처음 배우는 분들도 실무에 바로 쓸 수 있도록, ES5부터 ES6·Vuex까지 정복하고 Vue.js를 내 것으로 만들 수 있습니다";
+const Content = "마리가 도망친게 이해가 될듯 말듯.... 어쩌면 마리가 정말 사랑한건 루벤보다도 루벤에게 사랑받고 아름답게 보여지는 자신의 모습 아닐까....";
 
 export default class MainScreen extends Component {
     static navigationOptions = {
         header: null
     }
+    _scrollUpClicked = () => {
+        this.refs._scrollView.scrollTo({ x: 0, animated: true })
+    }
+
+
+
     render() {
+        const goUpButton = (
+            <TouchableOpacity style={{ alignSelf: 'center', width: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 36 }} onPress={this._scrollUpClicked}>
+                <GoupArrow />
+            </TouchableOpacity>
+        )
         return (
 
-            <ScrollView style={{ height: 3000 }} showsVerticalScrollIndicator={false} ref='_scrollView'>
-                <StatusBar barStyle="light-content" backgroundColor='#00000080' translucent={true} />
+            <ScrollView showsVerticalScrollIndicator={false} ref='_scrollView' overScrollMode={"never"} >
+                <StatusBar barStyle={Platform.OS == "android" ? "light-content" : "dark-content"} backgroundColor='#00000080' translucent={true} />
+
                 <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.TopContainer} start={[0, 0]} end={[1, 1]} >
                     <MainTitle />
                     <BannerScroll />
+                    <View style={styles.BottomContainer} />
                 </LinearGradient>
-                <View style={styles.BottomContainer} />
 
-                <View style={{ width: '100%', position: 'absolute', top: 510, flex: 1, alignItems: 'center' }}>
+
+                <View style={{ width: '100%', marginTop: 10, flex: 1, alignItems: 'center' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Exam')} style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', marginLeft: 24 }}>
                             <ArrowLeft />
-                            <Text style={{ marginLeft: 6, fontSize: 14, fontFamily: 'nanumbarungothic' }}>시험 D-{_dday}</Text>
+                            <Text style={{ marginLeft: 6, fontSize: 14, }}>시험 D-{_dday}</Text>
                         </TouchableOpacity>
-                        <Text style={{ flex: 1, fontSize: 14, textAlign: 'center', fontFamily: 'nanumbarungothic' }}>질문/정보</Text>
+                        <Text style={{ flex: 1, fontSize: 14, textAlign: 'center' }}>질문/정보</Text>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Contest')} style={{ flex: 1, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center', marginRight: 24 }}>
-                            <Text style={{ marginRight: 6, fontSize: 14, textAlign: 'right', fontFamily: 'nanumbarungothic' }}>수행/대회</Text>
+                            <Text style={{ marginRight: 6, fontSize: 14, textAlign: 'right' }}>수행/대회</Text>
                             <ArrowRight />
                         </TouchableOpacity>
                     </View>
@@ -56,11 +78,13 @@ export default class MainScreen extends Component {
                 <ProfileGroups />
 
                 <View style={styles.Cards}>
-                    <Card name='김종현' date='2분전' like='5' commentNum='13' isLiked={true} isBookmarked={true} tag={Tag} image={Image} content={Content} />
-                    <Card />
-                    <Card />
+                    <Card navigation={this.props.navigation} name='김종현' date='2분전' like='5' commentNum='13' isLiked={true} isBookmarked={true} tag={Tag} image={Image} ratio={9 / 16} content={Content} />
+                    <Card navigation={this.props.navigation} name='김종현' date='2분전' like='5' commentNum='13' isLiked={true} isBookmarked={true} tag={Tag} image={Image2} ratio={51 / 68} content={Content} />
+                    {goUpButton}
                 </View>
-            </ScrollView>
+
+
+            </ScrollView >
         )
     }
 }
@@ -77,8 +101,9 @@ const styles = StyleSheet.create({
         top: 480,
         left: 0,
         right: 0,
-        height: 40,
-        borderRadius: 20,
+        height: 20,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         backgroundColor: 'white'
     },
     Cards: {

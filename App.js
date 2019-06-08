@@ -2,6 +2,11 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import AppContainer from './AppContainer';
 import { Font } from 'expo';
+import Amplify from 'aws-amplify';
+import aws_exports from './YOUR-PATH-TO/aws-exports';
+
+Amplify.configure(aws_exports);
+
 
 export default class App extends React.Component {
   state = {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
 import Setting from '../Icons/setting.svg';
 
 

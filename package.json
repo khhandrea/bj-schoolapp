@@ -7,10 +7,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@dudigital/react-native-zoomable-view": "^1.0.13",
+    "aws-amplify": "^1.1.28",
+    "aws-amplify-react-native": "^2.1.12",
     "expo": "^32.0.6",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
+    "react-native-image-view": "^2.1.4",
+    "react-native-image-zoom-viewer": "^2.2.26",
+    "react-native-read-more-text": "^1.1.0",
+    "react-native-status-bar-height": "^2.3.1",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.11.0"
   },

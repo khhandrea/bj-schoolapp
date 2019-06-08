@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { Alert, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, TouchableNativeFeedback } from 'react-native'
+import Readmore from 'react-native-read-more-text';
 import { Colors } from '../Asset';
 import { LinearGradient } from 'expo';
 import BookmarkFill from '../Icons/bookmarkFill.svg';
@@ -7,6 +8,7 @@ import BookmarkEmpty from '../Icons/bookmarkEmpty.svg';
 import HeartFill from '../Icons/heartFill.svg';
 import HeartEmpty from '../Icons/heartEmpty.svg';
 import Dots from '../Icons/threeDots.svg';
+//자세히 보기 직접 만들어 
 
 const WIDTH = Dimensions.get('window').width;
 let _likeNum;
@@ -21,6 +23,27 @@ export default class MainCard extends Component {
     }
     componentDidMount() {
     }
+    _imageClicked(source) {
+        this.props.navigation.navigate('Photo', { image: source });
+    }
+    _scrollHandle = (event) => {
+        const page = Math.round(event.nativeEvent.contentOffset.x / (WIDTH - 40)) + 1;
+        this.setState({
+            myPage: page
+        })
+    }
+    _renderTruncatedFooter = (handlePress) => {
+        return (
+            <Text style={{ color: Colors.lightGray, fontSize: 14, lineHeight: 20 }} onPress={handlePress}>
+                자세히 보기
+          </Text>
+        );
+    }
+    _renderRevealedFooter = (handlePress) => {
+        return (
+            null
+        );
+    }
     render() {
         const { name, date, commentNum, like, content, isLiked, isBookmarked, image, tag, ratio } = this.props;
 
@@ -31,14 +54,14 @@ export default class MainCard extends Component {
                         width: 4, height: 4, borderRadius: 2, marginRight: 4,
                         backgroundColor: (index % 2 == 0 ? Colors.blue : Colors.red)
                     }} />
-                    <Text>{text}</Text>
+                    <Text style={{ fontSize: 14 }}>{text}</Text>
                 </View>
             )
         ) : null;
 
         const imageList = image ? image.map(
             (source, index) => (
-                <TouchableWithoutFeedback><Image key={index} source={{ uri: source }} style={{ width: WIDTH - 40, height: (WIDTH - 40) * 9 / 16 }} /></TouchableWithoutFeedback>
+                <TouchableOpacity activeOpacity={1} key={index} onPress={() => this._imageClicked(source)}><Image source={{ uri: source }} style={{ width: WIDTH - 40, height: (WIDTH - 40) * ratio }} /></TouchableOpacity>
             )
         ) : null;
 
@@ -52,18 +75,17 @@ export default class MainCard extends Component {
                             <Text style={{ fontSize: 10, color: Colors.gray, marginLeft: 4, marginTop: 4 }}>{date}</Text>
                         </View>
                     </View>
-                    <Dots />
+                    <TouchableWithoutFeedback style={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}><Dots /></TouchableWithoutFeedback>
                 </View>
 
                 {imageList != null ?
                     <View style={styles.ImageContainer}>
-                        <ScrollView horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
+                        <ScrollView overScrollMode={"never"} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false} onScroll={this._scrollHandle} scrollEventThrottle={16}>
                             {imageList}
-                            {image.length > 1 ? <View>
 
-                            </View> : null}
                         </ScrollView>
-                        <View style={styles.ImageNav}><Text style={{ color: 'white', fontSize: 12 }}>{this.state.myPage}/{image.length}</Text></View>
+                        {image.length > 1 ?
+                            <View style={styles.ImageNav}><Text style={{ color: 'white', fontSize: 12 }}>{this.state.myPage}/{image.length}</Text></View> : null}
                     </View> : null}
 
                 {tagList != null ? <View style={styles.TagContainer}>
@@ -72,9 +94,9 @@ export default class MainCard extends Component {
 
                 <View style={styles.ContentContainer}>
                     <View style={styles.ContentTextContainer}>
-                        <Text style={styles.ContentText}>
-                            {content}
-                        </Text>
+                        <Readmore numberOfLines={2} renderTruncatedFooter={this._renderTruncatedFooter} renderRevealedFooter={this._renderRevealedFooter}>
+                            <Text style={styles.ContentText}>{content}</Text>
+                        </Readmore>
                         <Text style={styles.ContentData}>
                             좋아요{like} · 댓글{commentNum}
                         </Text>
@@ -95,6 +117,7 @@ export default class MainCard extends Component {
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
