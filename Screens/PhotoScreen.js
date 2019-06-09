@@ -15,7 +15,6 @@ export default class PhotoScreen extends Component {
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
-            fontWeight: 'bold',
             color: 'white'
         },
     };
@@ -27,7 +26,7 @@ export default class PhotoScreen extends Component {
                 <StatusBar barStyle="light-content" backgroundColor='#00000080' translucent={true} />
                 <View style={{ flex: 1, overflow: 'hidden', backgroundColor: 'black' }}>
                     <ReactNativeZoomableView
-                        maxZoom={2}
+                        maxZoom={3}
                         minZoom={0.5}
                         zoomStep={0.5}
                         initialZoom={1}

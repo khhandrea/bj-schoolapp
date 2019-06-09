@@ -31,6 +31,9 @@ class MyItem extends Component {
 }
 
 export class Meal extends Component {
+    _buttonHandle = () => {
+        this.props.navigation.navigate('Photo', { image: "http://pureun.or.kr/2016/data/editor/1704/thumb-0876ba277bd6967acd1b62d69e873ecf_1492653152_6548_600x849.jpg" });
+    }
     render() {
         const { mealData } = this.props;
         const mealList = mealData.map(
@@ -49,13 +52,16 @@ export class Meal extends Component {
                 </View>
 
                 <View style={styles.ButtonConainer}>
-                    <TouchableOpacity style={styles.Button}><MealIcon /></TouchableOpacity>
+                    <TouchableOpacity onPress={this._buttonHandle} style={styles.Button}><MealIcon /></TouchableOpacity>
                 </View>
             </View>
         )
     }
 }
 export class Timetable extends Component {
+    _buttonHandle = () => {
+        this.props.navigation.navigate('Photo', { image: "http://mblogthumb2.phinf.naver.net/MjAxNzAzMTFfMTAy/MDAxNDg5MjEzNDcyMzE1.EDMa481wV7dkv41ypZQwu27az4805JzlcqWOtWOBlfUg.Ia5wxKbCWyhG6EE4y2q1daZQauZMzkNXEbUrRCswngEg.JPEG.virgo004/2%ED%95%99%EB%85%841%ED%95%99%EA%B8%B0%EC%8B%9C%EA%B0%84%ED%91%9C.jpg?type=w2" });
+    }
     render() {
         const { schedule } = this.props;
         const am =
@@ -85,13 +91,17 @@ export class Timetable extends Component {
                 </View>
 
                 <View style={styles.ButtonConainer}>
-                    <TouchableOpacity style={styles.Button}><MoreIcon /></TouchableOpacity>
+                    <TouchableOpacity onPress={this._buttonHandle} style={styles.Button}><MoreIcon /></TouchableOpacity>
                 </View>
             </View>
         )
     }
 }
 export class Notification extends Component {
+    _buttonHandle = () => {
+
+    }
+
     render() {
         const { notification } = this.props;
         const notiList = notification.map(
@@ -110,7 +120,7 @@ export class Notification extends Component {
                 </View>
 
                 <View style={styles.ButtonConainer}>
-                    <TouchableOpacity style={styles.Button}><EnterIcon /></TouchableOpacity>
+                    <TouchableOpacity onPress={this._buttonHandle} style={styles.Button}><EnterIcon /></TouchableOpacity>
                 </View>
             </View>
         )
@@ -133,6 +143,12 @@ export class Traffic extends Component {
 
         }
     }
+    _refrashHandle = () => {
+
+    }
+    _busHandle = () => {
+
+    }
     render() {
         const { bus } = this.props;
         return (
@@ -145,7 +161,7 @@ export class Traffic extends Component {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text>구성방면</Text><Text>{this.state.subway.gusung}</Text></View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text>죽전방면</Text><Text>{this.state.subway.Jukjeon}</Text></View>
                     <View style={{ width: 100, alignSelf: 'center', borderBottomColor: '#dbdbdb', borderBottomWidth: 1, marginBottom: 6, marginTop: 6 }} />
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={this._busHandle}>
                         <View>
                             {bus.map(
                                 (info, index) => (
@@ -164,7 +180,7 @@ export class Traffic extends Component {
                 </View>
 
                 <View style={styles.ButtonConainer}>
-                    <TouchableOpacity style={styles.Button}><RefrashIcon /></TouchableOpacity>
+                    <TouchableOpacity onPress={this._refrashHandle} style={styles.Button}><RefrashIcon /></TouchableOpacity>
                 </View>
             </View>
         )

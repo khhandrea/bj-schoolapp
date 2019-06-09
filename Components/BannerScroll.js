@@ -74,10 +74,10 @@ export default class BannerScroll extends Component {
                     <ScrollView horizontal={true} style={styles.ScrollView} showsHorizontalScrollIndicator={false} overScrollMode={"never"} ref={(ref) => this.myScroll = ref}
                         onScroll={event => this._handleScroll(event.nativeEvent.contentOffset.x)} scrollEventThrottle={16} nestedScrollEnabled={true}>
                         <View style={{ width: (WIDTH - 318) / 2 }} />
-                        <Timetable schedule={Schedule} />
-                        <Meal mealData={MealData} />
-                        <Traffic bus={Bus} />
-                        <Notification notification={Notifications} />
+                        <Timetable navigation={this.props.navigation} schedule={Schedule} />
+                        <Meal navigation={this.props.navigation} mealData={MealData} />
+                        <Traffic navigation={this.props.navigation} bus={Bus} />
+                        <Notification navigation={this.props.navigation} notification={Notifications} />
                         <View style={{ width: (WIDTH - 318) / 2 }} />
                     </ScrollView>
                 </View>

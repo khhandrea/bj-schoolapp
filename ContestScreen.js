@@ -24,7 +24,7 @@ export default class ContestScreen extends Component {
                     <View style={styles.HeaderContainer}>
                         <Text style={{ fontSize: 30, fontFamily: 'nanumbarungothic', color: 'white' }}>수행/대회</Text>
                         <TouchableOpacity style={{
-                        }} onPress={() => this.props.navigation.goBack()}>
+                        }} onPress={() => this.props.close()}>
                             <ArrowBack />
                         </TouchableOpacity>
                     </View>

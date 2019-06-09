@@ -8,15 +8,9 @@ let _dday = 24; //constructure 에서 선언
 
 export default class ExamScreen extends Component {
 
-
-    static navigationOptions = {
-        header: null
-    }
     render() {
-
         return (
             <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-                <StatusBar barStyle="light-content" backgroundColor={'#707070'} translucent={true} />
                 <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.Header} start={[1, 0]} end={[0, 1]} >
                     <Text style={{ fontSize: 30, fontFamily: 'nanumbarungothic', color: 'white', position: 'absolute', left: 26, top: 44 }}>시험정보</Text>
                     <Text style={{ fontSize: 14, fontFamily: 'nanumbarungothic', color: '#ffffff80', position: 'absolute', left: 140, top: 60 }}>D-{_dday}</Text>
@@ -24,7 +18,7 @@ export default class ExamScreen extends Component {
                         position: 'absolute',
                         right: 16,
                         top: 46,
-                    }} onPress={() => this.props.navigation.goBack()}>
+                    }} onPress={() => this.props.close()}>
                         <ArrowBack />
                     </TouchableOpacity>
 

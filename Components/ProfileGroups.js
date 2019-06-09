@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Alert, Text, StyleSheet, View, Button, Animated, TouchableWithoutFeedback, Platform, TouchableOpacity } from 'react-native'
+import { Alert, Text, StyleSheet, View, Button, Animated, TouchableWithoutFeedback, Platform, TouchableOpacity, Easing } from 'react-native'
 import { LinearGradient } from 'expo';
-import { MyIcon } from '../Asset';
+import { Colors } from '../Asset';
 import User from '../Icons/user.svg';
 import Bell from '../Icons/bell.svg';
 import Plus from '../Icons/plus.svg';
@@ -9,7 +9,7 @@ import PlusWhite from '../Icons/plusWhite.svg';
 import Search from '../Icons/search.svg';
 import BookMark from '../Icons/bookmark.svg'
 
-const DURATION = 0;
+const DURATION = 200;
 let _number = 20802;
 let _name = '어둠의다크';
 let _rank = 'Zl존';
@@ -22,100 +22,70 @@ export default class ProfileGroups extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // profile: new Animated.Value(200),
-            // info: new Animated.Value(40),
-            // more: new Animated.Value(40),
-            clicked: 1
+            profile: new Animated.Value(200),
+            info: new Animated.Value(40),
+            more: new Animated.Value(40),
+            clicked: 1,
+            feed: 1,
+            delaying: false,
         };
-
-        // // Toggle the state every second
-        // setInterval(() => (
-        //     this.setState(
-        //         { pointedBox: (this.state.pointedBox + 1) % 2 }
-        //     )
-        // ), 1000);
     }
 
     componentDidMount() {
     }
+    _feedHandle = () => {
+        setTimeout(() => {
+            this.setState({
+                feed: 0
+            })
+        }, 1000)
+    }
 
     _openProfile() {
-        this.setState({ clicked: 1 });
-        // Animated.timing(
-        //     this.state.info, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.more, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.profile, {
-        //         toValue: 200,
-        //         duration: DURATION,
-        //         delay: DURATION + 50,
-        //     }
-        // ).start();
+        if (this.state.clicked != 1) {
+            this.setState({ clicked: 1, delaying: true });
+            Animated.parallel([
+                Animated.timing(this.state.info, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.more, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.profile, { ease: Easing.linear, toValue: 200, duration: DURATION })
+            ]).start(() => this._delayEnd());
+        }
     }
     _openInfo() {
-        this.setState({ clicked: 2 });
-        // Animated.timing(
-        //     this.state.profile, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.more, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.info, {
-        //         toValue: 200,
-        //         duration: DURATION,
-        //         delay: DURATION + 50,
-        //     }
-        // ).start();
+        if (this.state.clicked != 2) {
+            this.setState({ clicked: 2, delaying: true });
+            Animated.parallel([
+                Animated.timing(this.state.profile, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.more, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.info, { ease: Easing.linear, toValue: 200, duration: DURATION })
+            ]).start(() => this._delayEnd());
+        }
+
     }
     _openMore() {
-        this.setState({ clicked: 3 });
-        // Animated.timing(
-        //     this.state.profile, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.info, {
-        //         toValue: 40,
-        //         duration: DURATION,
-        //     }
-        // ).start();
-        // Animated.timing(
-        //     this.state.more, {
-        //         toValue: 200,
-        //         duration: DURATION,
-        //         delay: DURATION + 50
-        //     }
-        // ).start();
+        if (this.state.clicked != 3) {
+            this.setState({ clicked: 3, delaying: true });
+            Animated.parallel([
+                Animated.timing(this.state.info, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.profile, { ease: Easing.linear, toValue: 40, duration: DURATION }),
+                Animated.timing(this.state.more, { ease: Easing.linear, toValue: 200, duration: DURATION })
+            ]).start(() => this._delayEnd());
+        }
+    }
+    _delayEnd() {
+        this.setState({ delaying: false });
     }
 
     render() {
         return (
             <View style={styles.Container}>
-                <Animated.View style={{ width: this.state.clicked == 1 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.profile, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openProfile()}>
-                        <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
+                        <LinearGradient style={styles.BoxContainer} colors={[Colors.lightRed, Colors.lightBlue]} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
                                 <User color="red" />
                             </View>
-                            {this.state.clicked == 1 ? <TouchableOpacity style={styles.Content}>
+                            {this.state.clicked == 1 && !this.state.delaying ? <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={styles.Content}>
                                 <View style={styles.ContentView}><Text style={styles.ContentTitle}>학번</Text><Text style={styles.ContentValue1}>{_number}</Text></View>
                                 <View style={styles.ContentView}><Text style={styles.ContentTitle}>닉네임</Text><Text style={styles.ContentValue1}>{_name}</Text></View>
                                 <View style={styles.ContentView}><Text style={styles.ContentTitle}>등급</Text><Text style={styles.ContentValue1}>{_rank}</Text></View>
@@ -124,30 +94,36 @@ export default class ProfileGroups extends Component {
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.clicked == 2 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.info, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openInfo()}>
                         <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
-                                <Bell />
+                                <View style={{ width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Bell />
+                                    {this.state.feed > 0 ? <View style={{
+                                        width: 8, height: 8, borderRadius: 4, borderWidth: 1, borderColor: 'white', backgroundColor: Colors.red, position: 'absolute', bottom: 10,
+                                        right: 9
+                                    }} /> : null}
+                                </View>
                             </View>
-                            {this.state.clicked == 2 ?
+                            {this.state.clicked == 2 && !this.state.delaying ?
                                 <View style={styles.Content}>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>게시물</Text><Text style={styles.ContentValue2}>{_post}</Text></TouchableOpacity>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>댓글</Text><Text style={styles.ContentValue2}>{_commnet}</Text></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>새알림</Text><Text style={styles.ContentValue2}>{_feed}</Text></TouchableOpacity>
+                                    <TouchableOpacity style={styles.ContentView} onPress={this._feedHandle}><Text style={styles.ContentTitle}>새알림</Text><Text style={styles.ContentValue2}>{this.state.feed}</Text></TouchableOpacity>
                                 </View> :
-                                <Text style={{ color: 'white', fontFamily: 'nanumbarungothic', fontSize: 16, textAlign: 'center', marginTop: 46 }}>{_feed > 0 ? _feed : null}</Text>}
+                                <Text style={{ color: 'white', fontFamily: 'nanumbarungothic', fontSize: 16, textAlign: 'center', marginTop: 46 }}>{this.state.feed > 0 && !this.state.delaying ? this.state.feed : null}</Text>}
                         </LinearGradient>
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.clicked == 3 ? 200 : 40, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.more, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openMore()}>
                         <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
                             <View style={styles.BoxTitle}>
                                 <Plus />
                             </View>
-                            {this.state.clicked == 3 ?
+                            {this.state.clicked == 3 && !this.state.delaying ?
                                 <View style={styles.Content}>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>

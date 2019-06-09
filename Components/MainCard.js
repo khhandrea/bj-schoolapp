@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Alert, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, TouchableNativeFeedback } from 'react-native'
-import Readmore from 'react-native-read-more-text';
 import { Colors } from '../Asset';
 import { LinearGradient } from 'expo';
 import BookmarkFill from '../Icons/bookmarkFill.svg';
@@ -8,10 +7,8 @@ import BookmarkEmpty from '../Icons/bookmarkEmpty.svg';
 import HeartFill from '../Icons/heartFill.svg';
 import HeartEmpty from '../Icons/heartEmpty.svg';
 import Dots from '../Icons/threeDots.svg';
-//자세히 보기 직접 만들어 
 
 const WIDTH = Dimensions.get('window').width;
-let _likeNum;
 
 export default class MainCard extends Component {
 
@@ -19,9 +16,12 @@ export default class MainCard extends Component {
         super(props);
         this.state = {
             myPage: 1,
+            isOverflow: false,
+            readMoreClicked: false,
+            isLiked: this.props.isLiked,
+            isBookmarked: this.props.isBookmarked,
+            like: this.props.like
         }
-    }
-    componentDidMount() {
     }
     _imageClicked(source) {
         this.props.navigation.navigate('Photo', { image: source });
@@ -32,20 +32,31 @@ export default class MainCard extends Component {
             myPage: page
         })
     }
-    _renderTruncatedFooter = (handlePress) => {
-        return (
-            <Text style={{ color: Colors.lightGray, fontSize: 14, lineHeight: 20 }} onPress={handlePress}>
-                자세히 보기
-          </Text>
-        );
+    _involkedLayout = (event) => {
+        if (event.nativeEvent.layout.height > 40) {
+            this.setState({
+                isOverflow: true,
+            });
+        }
     }
-    _renderRevealedFooter = (handlePress) => {
-        return (
-            null
-        );
+    _readmoreHandle = () => {
+        this.setState({
+            readMoreClicked: true,
+        })
+    }
+    _likeHandle = () => {
+        this.setState({
+            like: !this.state.isLiked ? this.state.like + 1 : this.state.like - 1,
+            isLiked: !this.state.isLiked,
+        })
+    }
+    _bookmarkHandle = () => {
+        this.setState({
+            isBookmarked: !this.state.isBookmarked
+        })
     }
     render() {
-        const { name, date, commentNum, like, content, isLiked, isBookmarked, image, tag, ratio } = this.props;
+        const { name, date, commentNum, content, image, tag, ratio } = this.props;
 
         const tagList = tag ? tag.map(
             (text, index) => (
@@ -94,23 +105,23 @@ export default class MainCard extends Component {
 
                 <View style={styles.ContentContainer}>
                     <View style={styles.ContentTextContainer}>
-                        <Readmore numberOfLines={2} renderTruncatedFooter={this._renderTruncatedFooter} renderRevealedFooter={this._renderRevealedFooter}>
-                            <Text style={styles.ContentText}>{content}</Text>
-                        </Readmore>
+                        <Text ref={(ref) => this.contentText = ref} style={styles.ContentText} onLayout={this._involkedLayout} numberOfLines={this.state.isOverflow == true ? (this.state.readMoreClicked == true ? null : 2) : null}>{content}</Text>
+                        {this.state.isOverflow && !this.state.readMoreClicked ? <TouchableWithoutFeedback onPress={this._readmoreHandle}><Text style={{ color: Colors.lightGray, fontSize: 14, lineHeight: 20 }} >자세히 보기</Text></TouchableWithoutFeedback> : null}
+
                         <Text style={styles.ContentData}>
-                            좋아요{like} · 댓글{commentNum}
+                            좋아요{this.state.like} · 댓글{commentNum}
                         </Text>
                     </View>
                 </View>
 
                 <LinearGradient colors={[Colors.lightBlue, Colors.lightRed]} style={styles.BottomBar} start={[0, 0]} end={[1, 1]} >
-                    <TouchableOpacity style={styles.BottomBarContent}>
-                        {isLiked == true ? <HeartFill /> : <HeartEmpty />}
+                    <TouchableOpacity activeOpacity={1} style={styles.BottomBarContent} onPress={this._likeHandle}>
+                        {this.state.isLiked == true ? <HeartFill /> : <HeartEmpty />}
                         <Text style={{ color: 'white', marginLeft: 8 }}>좋아요</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ height: '100%', justifyContent: 'center' }}><Text style={{ color: 'white' }} >댓글</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.BottomBarContent}>
-                        {isBookmarked == true ? <BookmarkFill /> : <BookmarkEmpty />}
+                    <TouchableOpacity activeOpacity={1} style={{ height: '100%', justifyContent: 'center' }}><Text style={{ color: 'white' }} >댓글</Text></TouchableOpacity>
+                    <TouchableOpacity activeOpacity={1} style={styles.BottomBarContent} onPress={this._bookmarkHandle}>
+                        {this.state.isBookmarked == true ? <BookmarkFill /> : <BookmarkEmpty />}
                         <Text style={{ color: 'white', marginLeft: 8 }}>북마크</Text>
                     </TouchableOpacity>
                 </LinearGradient>

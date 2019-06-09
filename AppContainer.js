@@ -1,8 +1,9 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
 import MainScreen from './MainScreen';
-import ExamScreen from './ExamScreen';
+//import ExamScreen from './ExamScreen';
 import ContestScreen from './ContestScreen';
 import PhotoScreen from './Screens/PhotoScreen';
+import ProfileScreen from './Screens/ProfileScreen';
 
 const FadeTransition = (index, position) => {
     const sceneRange = [index - 1, index];
@@ -81,20 +82,20 @@ const NavigationConfig = () => {
 const AppNavigator = createStackNavigator(
     {
         Main: MainScreen,
-        Exam: ExamScreen,
         Contest: ContestScreen,
-        Photo: PhotoScreen
+        Photo: PhotoScreen,
+        Profile: ProfileScreen,
     },
     {
         transitionConfig: NavigationConfig,
         initialRouteName: 'Main',
         defaultNavigationOptions: {
             headerStyle: {
-                height: 10
+                height: 50
             },
             // headerTintColor: '#fff',
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: 'light',
             },
         },
 
