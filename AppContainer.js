@@ -1,9 +1,11 @@
 import { createStackNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
+import { Platform } from "react-native";
 import MainScreen from './MainScreen';
 //import ExamScreen from './ExamScreen';
 import ContestScreen from './ContestScreen';
 import PhotoScreen from './Screens/PhotoScreen';
 import ProfileScreen from './Screens/ProfileScreen';
+import { Colors } from './Asset';
 
 const FadeTransition = (index, position) => {
     const sceneRange = [index - 1, index];
@@ -65,6 +67,9 @@ const NavigationConfig = () => {
             const width = sceneProps.layout.initWidth;
             const routeName = scene.route.routeName;
 
+            if (Platform.OS == 'ios') {
+                return RightTransition(index, position, width);
+            }
             if (routeName == "Exam") {
                 return LeftTransition(index, position, width);
             }
@@ -74,6 +79,7 @@ const NavigationConfig = () => {
             else if (routeName == "Photo") {
                 return BottomTransition(index, position, height);
             }
+
 
         }
     }
@@ -93,9 +99,10 @@ const AppNavigator = createStackNavigator(
             headerStyle: {
                 height: 50
             },
-            // headerTintColor: '#fff',
+            // headerTintColor: Colors.fontBlack,
             headerTitleStyle: {
                 fontWeight: 'light',
+                color: Colors.fontBlack
             },
         },
 

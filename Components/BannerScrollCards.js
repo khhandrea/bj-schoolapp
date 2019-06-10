@@ -24,7 +24,7 @@ class MyItem extends Component {
                     backgroundColor: (index % 2 == 0 ? Colors.red : Colors.blue),
                 }}
                 />
-                <Text style={{ fontSize: 14, color: Colors.fontBlack, marginLeft: 6 }}>{data}</Text>
+                <Text style={{ fontSize: 14, lineHeight: 20, color: Colors.fontBlack, marginLeft: 6 }}>{data}</Text>
             </View>
         )
     }
@@ -158,8 +158,8 @@ export class Traffic extends Component {
                 </View>
 
                 <View style={styles.ContentConainer}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text>구성방면</Text><Text>{this.state.subway.gusung}</Text></View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text>죽전방면</Text><Text>{this.state.subway.Jukjeon}</Text></View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text style={{ lineHeight: 20, fontSize: 14, color: Colors.fontBlack }}>구성방면</Text><Text>{this.state.subway.gusung}</Text></View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text style={{ lineHeight: 20, fontSize: 14, color: Colors.fontBlack }}>죽전방면</Text><Text>{this.state.subway.Jukjeon}</Text></View>
                     <View style={{ width: 100, alignSelf: 'center', borderBottomColor: '#dbdbdb', borderBottomWidth: 1, marginBottom: 6, marginTop: 6 }} />
                     <TouchableWithoutFeedback onPress={this._busHandle}>
                         <View>
@@ -168,7 +168,7 @@ export class Traffic extends Component {
                                     <View key={index} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, marginBottom: 3 }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                             <BusIcon bus={info} />
-                                            <Text style={{ marginLeft: 5 }}>{info}</Text>
+                                            <Text style={{ marginLeft: 5, lineHeight: 20, fontSize: 14, color: Colors.fontBlack }}>{info}</Text>
                                         </View>
                                         <Text>{this.state.bus[index]}</Text>
                                     </View>

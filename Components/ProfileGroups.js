@@ -10,8 +10,6 @@ import Search from '../Icons/search.svg';
 import BookMark from '../Icons/bookmark.svg'
 
 const DURATION = 200;
-let _number = 20802;
-let _name = '어둠의다크';
 let _rank = 'Zl존';
 let _post = '7';
 let _commnet = '14';
@@ -28,6 +26,8 @@ export default class ProfileGroups extends Component {
             clicked: 1,
             feed: 1,
             delaying: false,
+            name: '어둠의 다크',
+            number: '20702'
         };
     }
 
@@ -75,6 +75,12 @@ export default class ProfileGroups extends Component {
     _delayEnd() {
         this.setState({ delaying: false });
     }
+    _changeProfileData = (name, number) => {
+        this.setState({
+            number: number,
+            name: name,
+        })
+    }
 
     render() {
         return (
@@ -85,9 +91,9 @@ export default class ProfileGroups extends Component {
                             <View style={styles.BoxTitle}>
                                 <User color="red" />
                             </View>
-                            {this.state.clicked == 1 && !this.state.delaying ? <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')} style={styles.Content}>
-                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>학번</Text><Text style={styles.ContentValue1}>{_number}</Text></View>
-                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>닉네임</Text><Text style={styles.ContentValue1}>{_name}</Text></View>
+                            {this.state.clicked == 1 && !this.state.delaying ? <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { changeProfile: this._changeProfileData })} style={styles.Content}>
+                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>학번</Text><Text style={styles.ContentValue1}>{this.state.number}</Text></View>
+                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>닉네임</Text><Text style={styles.ContentValue1}>{this.state.name}</Text></View>
                                 <View style={styles.ContentView}><Text style={styles.ContentTitle}>등급</Text><Text style={styles.ContentValue1}>{_rank}</Text></View>
                             </TouchableOpacity> : null}
                         </LinearGradient>
