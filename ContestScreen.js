@@ -15,6 +15,7 @@ export default class ContestScreen extends Component {
             sellectNum: 1, //1==수행 2== 대회
         }
     }
+
     render() {
 
         return (

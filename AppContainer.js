@@ -1,10 +1,11 @@
 import { createStackNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
 import { Platform } from "react-native";
 import MainScreen from './MainScreen';
-//import ExamScreen from './ExamScreen';
-import ContestScreen from './ContestScreen';
 import PhotoScreen from './Screens/PhotoScreen';
 import ProfileScreen from './Screens/ProfileScreen';
+import CommentScreen from './Screens/CommentScreen';
+import CameraScreen from './Screens/CameraScreen'
+
 import { Colors } from './Asset';
 
 const FadeTransition = (index, position) => {
@@ -88,9 +89,10 @@ const NavigationConfig = () => {
 const AppNavigator = createStackNavigator(
     {
         Main: MainScreen,
-        Contest: ContestScreen,
         Photo: PhotoScreen,
         Profile: ProfileScreen,
+        Comment: CommentScreen,
+        Camera: CameraScreen
     },
     {
         transitionConfig: NavigationConfig,
@@ -101,7 +103,7 @@ const AppNavigator = createStackNavigator(
             },
             // headerTintColor: Colors.fontBlack,
             headerTitleStyle: {
-                fontWeight: 'light',
+                fontWeight: '200',
                 color: Colors.fontBlack
             },
         },

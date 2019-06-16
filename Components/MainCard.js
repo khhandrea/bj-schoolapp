@@ -55,6 +55,9 @@ export default class MainCard extends Component {
             isBookmarked: !this.state.isBookmarked
         })
     }
+    _commentHandle = () => {
+        this.props.navigation.navigate('Comment');
+    }
     render() {
         const { name, date, commentNum, content, image, tag, ratio } = this.props;
 
@@ -119,7 +122,7 @@ export default class MainCard extends Component {
                         {this.state.isLiked == true ? <HeartFill /> : <HeartEmpty />}
                         <Text style={{ color: 'white', marginLeft: 8 }}>좋아요</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} style={{ height: '100%', justifyContent: 'center' }}><Text style={{ color: 'white' }} >댓글</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={this._commentHandle} activeOpacity={1} style={{ height: '100%', justifyContent: 'center' }}><Text style={{ color: 'white' }} >댓글</Text></TouchableOpacity>
                     <TouchableOpacity activeOpacity={1} style={styles.BottomBarContent} onPress={this._bookmarkHandle}>
                         {this.state.isBookmarked == true ? <BookmarkFill /> : <BookmarkEmpty />}
                         <Text style={{ color: 'white', marginLeft: 8 }}>북마크</Text>

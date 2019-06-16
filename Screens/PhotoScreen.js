@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Modal, Dimensions, Text, Image, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, View, Modal, Dimensions, Text, Image, ScrollView, StatusBar, Platform } from 'react-native';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+import { Colors } from '../Asset'
 
 
 
@@ -10,12 +11,13 @@ export default class PhotoScreen extends Component {
     static navigationOptions = {
         title: '사진',
         headerStyle: {
-            backgroundColor: '#333',
+            backgroundColor: Platform.OS === 'android' ? '#333' : '#fff',
             height: 50,
+            borderBottomWidth: 0,
         },
-        headerTintColor: '#fff',
+        headerTintColor: Platform.OS === 'ios' ? Colors.fontBlack : 'white',
         headerTitleStyle: {
-            color: 'white'
+            color: Platform.OS === 'ios' ? Colors.fontBlack : 'white'
         },
     };
 
@@ -23,8 +25,8 @@ export default class PhotoScreen extends Component {
         const image = this.props.navigation.state.params.image;
         return (
             <View style={styles.Container}>
-                <StatusBar barStyle="light-content" backgroundColor='#00000080' translucent={true} />
-                <View style={{ flex: 1, overflow: 'hidden', backgroundColor: 'black' }}>
+                <StatusBar barStyle={Platform.OS === 'android' ? "light-content" : 'dark-content'} backgroundColor='#00000080' translucent={true} />
+                <View style={{ flex: 1, overflow: 'hidden', backgroundColor: Platform.OS === 'android' ? 'black' : '#eeeeee' }}>
                     <ReactNativeZoomableView
                         maxZoom={3}
                         minZoom={0.5}

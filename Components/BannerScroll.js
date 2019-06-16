@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Dimensions, InteractionManager } from 'react-native'
+import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Dimensions, InteractionManager, Platform } from 'react-native'
 import { Meal, Timetable, Notification, Traffic } from './BannerScrollCards';
 import TimetableIcon from '../Icons/timetable.svg';
 import MealIcon from '../Icons/meal.svg';
@@ -51,12 +51,13 @@ export default class BannerScroll extends Component {
 
     }
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            setTimeout(() => {
-                this.myScroll.scrollTo({ x: SCROLLUNIT * 2 + ((WIDTH - 318) / 2), y: 0, animated: false });
-            }, 1)
-        })
-
+        if (Platform.OS == 'android') {
+            InteractionManager.runAfterInteractions(() => {
+                setTimeout(() => {
+                    this.myScroll.scrollTo({ x: SCROLLUNIT * 2 + ((WIDTH - 318) / 2), y: 0, animated: false });
+                }, 1)
+            })
+        }
     }
 
     _scrollCtrl(_x) {

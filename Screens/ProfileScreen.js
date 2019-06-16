@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, Platform } from 'react-native'
 import { Colors } from '../Asset';
 
 let myPassword; //서버에서 불러오기
@@ -43,7 +43,7 @@ export default class ProfileScreen extends Component {
 
                     {
                         text: '알겠습니다', onPress: () => {
-                            this.passwordInput.focus();
+                            if (Platform.OS == 'android') this.passwordInput.focus();
                             return null;
                         }
                     },

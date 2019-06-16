@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, StatusBar, Button, AppRegistry, Dimensions, Text, TouchableOpacity, Platform, Modal } from 'react-native';
+import { StyleSheet, View, ScrollView, StatusBar, Dimensions, Text, TouchableOpacity, Platform, BackHandler } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { LinearGradient } from 'expo';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
@@ -37,6 +37,8 @@ const Image2 = [
 ]
 const Content = "마리가 도망친게 이해가 될듯 말듯.... 어쩌면 마리가 정말 사랑한건 루벤보다도 루벤에게 사랑받고 아름답게 보여지는 자신의 모습 아닐까....";
 
+
+
 export default class MainScreen extends Component {
     static navigationOptions = {
         header: null
@@ -56,6 +58,7 @@ export default class MainScreen extends Component {
 
         setTimeout(() => {
             setTimeout(() => {
+                this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
                 this.drawer.openDrawer();
             }, 1)
         }, 1)
@@ -65,12 +68,26 @@ export default class MainScreen extends Component {
         this.setState({ isExam: false });
         setTimeout(() => {
             setTimeout(() => {
+                this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
                 this.drawer.openDrawer();
             }, 1)
         }, 1)
 
 
     }
+    _drawerClose = () => {
+        this.backHandler.remove();
+    }
+    handleBackPress = () => {
+        this.goBack();
+        return true;
+    }
+    goBack = () => {
+        this.drawer.closeDrawer();
+    }
+
+
+
     render() {
         const renderExam = () => {
             return (
@@ -101,7 +118,7 @@ export default class MainScreen extends Component {
                     drawerType='slide'
                     drawerBackgroundColor="#fff"
                     drawerLockMode='locked-open'
-                    //onDrawerClose={this._drawerClose}
+                    onDrawerClose={this._drawerClose}
                     renderNavigationView={this.state.isExam ? renderExam : renderContest}>
                     <ScrollView showsVerticalScrollIndicator={false} ref='_scrollView' overScrollMode={"never"} >
 
