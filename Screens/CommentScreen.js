@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, ActionSheetIOS, Platform } from 'react-native'
+import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, ActionSheetIOS, Platform, ActivityIndicator } from 'react-native'
 import { Colors } from '../Asset';
 import { Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { ImagePicker, Permissions, LinearGradient } from 'expo';
@@ -16,6 +16,7 @@ const Comments = [
         rank: 1,
         name: '김종현',
         content: '안녕하살법',
+        image: null,
         time: '5분전',
         like: 10,
         iLiked: false,
@@ -25,6 +26,7 @@ const Comments = [
         rank: 3,
         name: '홍사훈',
         content: '안녕하살법 받아치기',
+        image: { source: 'https://img.insight.co.kr/static/2019/05/14/700/255ocxbanba3n956n6w7.jpg', ratio: 4 / 7 },
         time: '4분전',
         like: 2,
         iLiked: true,
@@ -35,6 +37,7 @@ const Comments = [
         rank: 5,
         name: '김환희',
         content: '네다씹',
+        image: null,
         time: '2분전',
         like: 20,
         iLiked: true,
@@ -45,6 +48,7 @@ const Comments = [
         rank: 5,
         name: '게시자',
         content: '자제좀;;',
+        image: null,
         time: '1분전',
         like: 55,
         iLiked: true,
@@ -55,6 +59,7 @@ const Comments = [
         rank: 5,
         name: '김세준',
         content: 'ㅂㅇㄹ',
+        image: { source: 'https://t1.daumcdn.net/cfile/tistory/99F2DC355C54E50E27', ratio: 1 },
         time: '5분전',
         like: 0,
         iLiked: false,
@@ -72,12 +77,17 @@ export default class CommentScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             btnLocation: 0,
             image: null,
             ratio: null,
             comments: Comments,
             clickedComment: null,
         }
+        setTimeout(() => {
+            this.setState({ loading: true });
+        }, 700)
+
     }
 
     componentWillMount() {
@@ -194,6 +204,15 @@ export default class CommentScreen extends Component {
                                 <Text style={{ fontWeight: 'normal', color: '#000' }}>{data.content}</Text>
                             </Text>
                         </Text>
+
+                        {data.image ?
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => {
+                                this.props.navigation.navigate('Photo', { image: data.image.source });
+                            }} style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) * data.image.ratio : (WIDTH - 150) * data.image.ratio, borderRadius: 20, overflow: 'hidden', marginVertical: 5 }}>
+                                <Image style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) * data.image.ratio : (WIDTH - 150) * data.image.ratio }} source={{ uri: data.image.source }} />
+                            </TouchableOpacity>
+                            : null}
+
                         <View>
                             <Text style={{ fontSize: 12, lineHeight: 20, marginBottom: 5, color: Colors.lightGray }}>{data.time}{'    '}
                                 <Text>
@@ -218,10 +237,15 @@ export default class CommentScreen extends Component {
 
 
         return (
+
             <View style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1 }}>
-                    {myComment}
-                </ScrollView>
+                {!this.state.loading ?
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator size='large' color='#dddddd' /></View>
+                    :
+                    <ScrollView style={{ flex: 1 }}>
+                        {myComment}
+                        <View style={{ height: 50 + this.state.btnLocation }} />
+                    </ScrollView>}
 
                 <View style={{ position: 'absolute', left: 0, right: 0, bottom: this.state.btnLocation }}>
 
@@ -243,12 +267,12 @@ export default class CommentScreen extends Component {
                             <ModalPicker style={{ width: 50, height: 36, marginleft: 8, alignItems: 'center', justifyContent: 'center' }}
                                 data={Sellection}
                                 onChange={(option) => {
-                                    if(option.key === 0) {
+                                    if (option.key === 0) {
                                         this._openGellary();
-                                    } else if(option.key === 1) {
+                                    } else if (option.key === 1) {
                                         this._openCamera();
                                     }
-                                    
+
                                 }}
                                 cancelText='취소'
                             >
@@ -256,9 +280,9 @@ export default class CommentScreen extends Component {
                             </ModalPicker>
                         }
                         <View style={styles.TextInputContainer}>
-                            <TextInput ref={myInput => this.myInput = myInput} placeholder={this.state.clickedComment != null ? `${this.state.comments[this.state.clickedComment].name}에게 댓글 달기...` : '댓글 달기...'} style={styles.TextInput} />
-                            <TouchableOpacity onPress={this._commentAddHandle} style={{ width: 30, alignItems: 'center', flexDirection: 'row' }}>
-                                <Text style={{ color: Colors.highlightBlue, textAlign: 'right' }}>게시</Text>
+                            <TextInput maxLength={240} multiline={true} ref={myInput => this.myInput = myInput} placeholder={this.state.clickedComment != null ? `${this.state.comments[this.state.clickedComment].name}에게 댓글 달기...` : '댓글 달기...'} style={styles.TextInput} />
+                            <TouchableOpacity onPress={this._commentAddHandle} style={{ width: 30, height: 20, alignItems: 'center', flexDirection: 'row', padding: 0 }}>
+                                <Text style={{ color: Colors.highlightBlue, textAlign: 'right', lineHeight: 20 }}>게시</Text>
                             </TouchableOpacity>
                         </View>
                     </LinearGradient>
@@ -279,8 +303,7 @@ const styles = StyleSheet.create({
         paddingVertical: 7
     },
     TextInputContainer: {
-        height: 36,
-
+        paddingVertical: 5,
         width: WIDTH - 66,
         borderRadius: 18,
         backgroundColor: 'white',
@@ -290,7 +313,9 @@ const styles = StyleSheet.create({
     },
     TextInput: {
         width: WIDTH - 136,
-
+        lineHeight: 20,
+        margin: 0,
+        padding: 0,
     }
 
 })

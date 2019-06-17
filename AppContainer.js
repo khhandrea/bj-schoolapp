@@ -5,6 +5,7 @@ import PhotoScreen from './Screens/PhotoScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 import CommentScreen from './Screens/CommentScreen';
 import CameraScreen from './Screens/CameraScreen'
+import BusScreen from './Screens/BusScreen';
 
 import { Colors } from './Asset';
 
@@ -74,10 +75,10 @@ const NavigationConfig = () => {
             if (routeName == "Exam") {
                 return LeftTransition(index, position, width);
             }
-            else if (routeName == "Contest") {
+            else if (routeName == "Contest" || routeName == "Comment") {
                 return RightTransition(index, position, width);
             }
-            else if (routeName == "Photo") {
+            else if (routeName == "Photo" || routeName == "Bus") {
                 return BottomTransition(index, position, height);
             }
 
@@ -92,7 +93,8 @@ const AppNavigator = createStackNavigator(
         Photo: PhotoScreen,
         Profile: ProfileScreen,
         Comment: CommentScreen,
-        Camera: CameraScreen
+        Camera: CameraScreen,
+        Bus: BusScreen
     },
     {
         transitionConfig: NavigationConfig,

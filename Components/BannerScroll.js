@@ -57,6 +57,8 @@ export default class BannerScroll extends Component {
                     this.myScroll.scrollTo({ x: SCROLLUNIT * 2 + ((WIDTH - 318) / 2), y: 0, animated: false });
                 }, 1)
             })
+        } else {
+            this.myScroll.scrollTo({ x: SCROLLUNIT * 2 + ((WIDTH - 318) / 2), y: 0, animated: false });
         }
     }
 

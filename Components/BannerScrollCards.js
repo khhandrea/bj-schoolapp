@@ -147,7 +147,7 @@ export class Traffic extends Component {
 
     }
     _busHandle = () => {
-
+        this.props.navigation.navigate("Bus");
     }
     render() {
         const { bus } = this.props;
