@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, StatusBar, TouchableOpacity, ScrollView, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import { LinearGradient } from 'expo';
-import ArrowBack from './Icons/arrowBack.svg';
+import ArrowBack from '../Icons/arrowBack.svg';
 
 const SCREENWIDTH = Dimensions.get('window').width;
 

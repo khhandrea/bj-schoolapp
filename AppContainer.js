@@ -1,13 +1,21 @@
+import React, { Component } from 'react'
+import { } from 'react-native'
 import { createStackNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
 import { Platform } from "react-native";
-import MainScreen from './MainScreen';
+import MainScreen from './Screens/MainScreen';
 import PhotoScreen from './Screens/PhotoScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 import CommentScreen from './Screens/CommentScreen';
 import CameraScreen from './Screens/CameraScreen'
 import BusScreen from './Screens/BusScreen';
+import PostScreen, { ContentScreen } from './Screens/PostScreen';
+import NotificationScreen from './Screens/NotificationScreen';
+import { BaseButton } from 'react-native-gesture-handler';
+import { AntDesign } from '@expo/vector-icons';
 
-import { Colors } from './Asset';
+
+
+import { Colors } from './Components/Asset';
 
 const FadeTransition = (index, position) => {
     const sceneRange = [index - 1, index];
@@ -78,7 +86,7 @@ const NavigationConfig = () => {
             else if (routeName == "Contest" || routeName == "Comment") {
                 return RightTransition(index, position, width);
             }
-            else if (routeName == "Photo" || routeName == "Bus") {
+            else if (routeName == "Photo" || routeName == "Bus" || "Notification") {
                 return BottomTransition(index, position, height);
             }
 
@@ -87,6 +95,8 @@ const NavigationConfig = () => {
     }
 }
 
+
+
 const AppNavigator = createStackNavigator(
     {
         Main: MainScreen,
@@ -94,21 +104,28 @@ const AppNavigator = createStackNavigator(
         Profile: ProfileScreen,
         Comment: CommentScreen,
         Camera: CameraScreen,
-        Bus: BusScreen
+        Bus: BusScreen,
+        Post: PostScreen,
+        Post_Content: ContentScreen,
+        Notification: NotificationScreen,
     },
     {
         transitionConfig: NavigationConfig,
         initialRouteName: 'Main',
-        defaultNavigationOptions: {
+        defaultNavigationOptions: ({ navigation }) => ({
             headerStyle: {
                 height: 50
             },
-            // headerTintColor: Colors.fontBlack,
+            headerLeft:
+                <BaseButton onPress={() => navigation.goBack()} style={{ alignItems: 'center', justifyContent: 'center', height: 50, width: 50 }} >
+                    <AntDesign name='arrowleft' size={20} style={{ margin: 0 }} />
+                </BaseButton>
+            ,
             headerTitleStyle: {
                 fontWeight: '200',
                 color: Colors.fontBlack
             },
-        },
+        }),
 
     }
 );

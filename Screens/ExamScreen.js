@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, StatusBar, Button, ScrollView, TouchableOpacity, } from 'react-native'
 import { LinearGradient } from 'expo';
-import ArrowBack from './Icons/arrowBack2.svg';
+import ArrowBack from '../Icons/arrowBack2.svg';
 
 
 let _dday = 24; //constructure 에서 선언

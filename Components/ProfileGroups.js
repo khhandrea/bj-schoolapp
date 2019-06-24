@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Alert, Text, StyleSheet, View, Button, Animated, TouchableWithoutFeedback, Platform, TouchableOpacity, Easing } from 'react-native'
 import { LinearGradient } from 'expo';
-import { Colors } from '../Asset';
+import { Colors } from './Asset';
 import User from '../Icons/user.svg';
 import Bell from '../Icons/bell.svg';
 import Plus from '../Icons/plus.svg';
@@ -133,7 +133,7 @@ export default class ProfileGroups extends Component {
                                 <View style={styles.Content}>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
                                     <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite style={styles.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')} style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite style={styles.contentValue3} /></TouchableOpacity>
                                 </View> : null}
                         </LinearGradient>
                     </TouchableWithoutFeedback>

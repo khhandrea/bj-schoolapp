@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, ActionSheetIOS, Platform, ActivityIndicator } from 'react-native'
-import { Colors } from '../Asset';
+import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, Platform, ActivityIndicator } from 'react-native'
+import { Colors } from '../Components/Asset';
 import { Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { ImagePicker, Permissions, LinearGradient } from 'expo';
-import ModalPicker from 'react-native-modal-picker-v2'
+import MyActionSheet from '../Components/MyActionSheet';
 
 
 
 
-
+const MaxRatio = 2;
 const WIDTH = Dimensions.get('window').width;
 const Comments = [
     {
@@ -26,7 +26,7 @@ const Comments = [
         rank: 3,
         name: '홍사훈',
         content: '안녕하살법 받아치기',
-        image: { source: 'https://img.insight.co.kr/static/2019/05/14/700/255ocxbanba3n956n6w7.jpg', ratio: 4 / 7 },
+        image: { source: 'https://img.insight.co.kr/static/2019/05/14/700/255ocxbanba3n956n6w7.jpg', ratio: 7 / 4 },
         time: '4분전',
         like: 2,
         iLiked: true,
@@ -66,10 +66,6 @@ const Comments = [
     }
 
 ]
-const Sellection = [
-    { key: 0, label: '엘범에서 가져오기' },
-    { key: 1, label: '카메라로 촬영하기' },
-];
 
 export default class CommentScreen extends Component {
     static navigationOptions = { title: '댓글' };
@@ -83,6 +79,7 @@ export default class CommentScreen extends Component {
             ratio: null,
             comments: Comments,
             clickedComment: null,
+            visible: false
         }
         setTimeout(() => {
             this.setState({ loading: true });
@@ -119,24 +116,7 @@ export default class CommentScreen extends Component {
         this.setState({ image: null });
     }
     _imageAddHandle = () => {
-        if (Platform.OS == 'ios') {
-            this._iosSelector();
-        }
-    }
-    _iosSelector = () => {
-        ActionSheetIOS.showActionSheetWithOptions(
-            {
-                options: ['취소', '앨범에서 가져오기', '카메라로 촬영하기'],
-                cancelButtonIndex: 0,
-            },
-            (buttonIndex) => {
-                if (buttonIndex === 1) {
-                    this._openGellary();
-                } else if (buttonIndex === 2) {
-                    this._openCamera();
-                }
-            },
-        );
+        this.setState({ visible: true });
     }
     _openCamera = () => {
         this.props.navigation.navigate('Camera', { changePhoto: this._changePhoto });
@@ -162,12 +142,20 @@ export default class CommentScreen extends Component {
     _changePhoto = (_uri, _ratio) => {
         this.setState({ image: _uri, ratio: _ratio })
     }
-
+    _actionSheetHandle(index) {
+        if (index == 0) {
+            this.setState({ isCameraMode: false });
+            this._openGellary();
+        } else if (index == 1) {
+            this.setState({ isCameraMode: true });
+            this._openCamera();
+        }
+    }
 
     _commentAddHandle = () => {
 
     }
-    _commentHandle(id) {
+    _commentHandle(id) { //클릭
         if (this.state.clickedComment == id) {
             this.setState({ clickedComment: null });
         } else {
@@ -208,8 +196,8 @@ export default class CommentScreen extends Component {
                         {data.image ?
                             <TouchableOpacity activeOpacity={0.7} onPress={() => {
                                 this.props.navigation.navigate('Photo', { image: data.image.source });
-                            }} style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) * data.image.ratio : (WIDTH - 150) * data.image.ratio, borderRadius: 20, overflow: 'hidden', marginVertical: 5 }}>
-                                <Image style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) * data.image.ratio : (WIDTH - 150) * data.image.ratio }} source={{ uri: data.image.source }} />
+                            }} style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio), borderRadius: 20, overflow: 'hidden', marginVertical: 5 }}>
+                                <Image style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) }} source={{ uri: data.image.source }} />
                             </TouchableOpacity>
                             : null}
 
@@ -244,7 +232,7 @@ export default class CommentScreen extends Component {
                     :
                     <ScrollView style={{ flex: 1 }}>
                         {myComment}
-                        <View style={{ height: 50 + this.state.btnLocation }} />
+                        <View style={{ height: this.state.image ? 100 + this.state.btnLocation : 50 + this.state.btnLocation }} />
                     </ScrollView>}
 
                 <View style={{ position: 'absolute', left: 0, right: 0, bottom: this.state.btnLocation }}>
@@ -252,7 +240,7 @@ export default class CommentScreen extends Component {
                     {this.state.image ?
                         <View style={{ height: 50, width: '100%', alignItems: 'center', justifyContent: 'center', borderTopColor: '#dbdbdb', borderTopWidth: 1, backgroundColor: 'white' }}>
                             <TouchableOpacity onPress={this._imageHandle} style={{ height: 36, flexDirection: 'row', alignItems: 'center' }}>
-                                <View style={{ height: '100%', width: 36 * this.state.ratio, overflow: 'hidden', borderRadius: 5 }}><Image source={{ uri: this.state.image }} style={{ height: '100%', width: 36 * this.state.ratio }} /></View>
+                                <View style={{ height: '100%', width: 36 * (this.state.ratio > MaxRatio ? MaxRatio : this.state.ratio < 1 / MaxRatio ? 1 / MaxRatio : this.state.ratio), overflow: 'hidden', borderRadius: 5 }}><Image source={{ uri: this.state.image }} style={{ height: '100%', width: 36 * (this.state.ratio > MaxRatio ? MaxRatio : this.state.ratio < 1 / MaxRatio ? 1 / MaxRatio : this.state.ratio) }} /></View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this._imageDeleteHandle} style={{ position: 'absolute', right: 0, width: 50, hegith: 50, alignItems: 'center', justifyContent: 'center' }}>
                                 <AntDesign name='close' color={Colors.gray} size={20} />
@@ -260,25 +248,10 @@ export default class CommentScreen extends Component {
                         </View>
                         : null}
                     <LinearGradient colors={[Colors.lightRed, Colors.lightBlue]} style={styles.FooterContainer} start={[0, 0]} end={[1, 1]} >
-                        {Platform.OS === 'ios' ?
-                            (<TouchableOpacity onPress={this._imageAddHandle} style={{ width: 50, height: 36, marginleft: 8, alignItems: 'center', justifyContent: 'center' }}>
-                                <Entypo name='attachment' color='white' size={22} style={{ margin: 0 }} />
-                            </TouchableOpacity>) :
-                            <ModalPicker style={{ width: 50, height: 36, marginleft: 8, alignItems: 'center', justifyContent: 'center' }}
-                                data={Sellection}
-                                onChange={(option) => {
-                                    if (option.key === 0) {
-                                        this._openGellary();
-                                    } else if (option.key === 1) {
-                                        this._openCamera();
-                                    }
 
-                                }}
-                                cancelText='취소'
-                            >
-                                <Entypo name='attachment' color='white' size={22} style={{ margin: 0 }} />
-                            </ModalPicker>
-                        }
+                        <TouchableOpacity onPress={this._imageAddHandle} style={{ width: 50, height: 36, marginleft: 8, alignItems: 'center', justifyContent: 'center' }}>
+                            <Entypo name='attachment' color='white' size={22} style={{ margin: 0 }} />
+                        </TouchableOpacity>
                         <View style={styles.TextInputContainer}>
                             <TextInput maxLength={240} multiline={true} ref={myInput => this.myInput = myInput} placeholder={this.state.clickedComment != null ? `${this.state.comments[this.state.clickedComment].name}에게 댓글 달기...` : '댓글 달기...'} style={styles.TextInput} />
                             <TouchableOpacity onPress={this._commentAddHandle} style={{ width: 30, height: 20, alignItems: 'center', flexDirection: 'row', padding: 0 }}>
@@ -287,6 +260,13 @@ export default class CommentScreen extends Component {
                         </View>
                     </LinearGradient>
                 </View>
+
+
+                <MyActionSheet
+                    visible={this.state.visible}
+                    contents={['앨범에서 가져오기', '카메라로 촬영하기']}
+                    onClicked={(data) => this._actionSheetHandle(data)}
+                    closeHandle={() => this.setState({ visible: false })} />
             </View>
         )
     }

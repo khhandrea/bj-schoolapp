@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Alert, Text, StyleSheet, View, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, TouchableNativeFeedback } from 'react-native'
-import { Colors } from '../Asset';
+import { Colors } from './Asset';
 import { LinearGradient } from 'expo';
+import { BaseButton } from 'react-native-gesture-handler';
 import BookmarkFill from '../Icons/bookmarkFill.svg';
 import BookmarkEmpty from '../Icons/bookmarkEmpty.svg';
 import HeartFill from '../Icons/heartFill.svg';
@@ -9,6 +10,7 @@ import HeartEmpty from '../Icons/heartEmpty.svg';
 import Dots from '../Icons/threeDots.svg';
 
 const WIDTH = Dimensions.get('window').width;
+const MaxRatio = 2;
 
 export default class MainCard extends Component {
 
@@ -24,7 +26,7 @@ export default class MainCard extends Component {
         }
     }
     _imageClicked(source) {
-        this.props.navigation.navigate('Photo', { image: source });
+        this.props.navigation.navigate('Photo', { image: this.props.image, index: (this.state.myPage - 1) });
     }
     _scrollHandle = (event) => {
         const page = Math.round(event.nativeEvent.contentOffset.x / (WIDTH - 40)) + 1;
@@ -75,7 +77,7 @@ export default class MainCard extends Component {
 
         const imageList = image ? image.map(
             (source, index) => (
-                <TouchableOpacity activeOpacity={1} key={index} onPress={() => this._imageClicked(source)}><Image source={{ uri: source }} style={{ width: WIDTH - 40, height: (WIDTH - 40) * ratio }} /></TouchableOpacity>
+                <TouchableOpacity activeOpacity={1} key={index} onPress={() => this._imageClicked(source)}><Image source={{ uri: source }} style={{ width: WIDTH - 40, height: (WIDTH - 40) * (ratio > MaxRatio ? MaxRatio : ratio < 1 / MaxRatio ? 1 / MaxRatio : ratio) }} /></TouchableOpacity>
             )
         ) : null;
 
@@ -116,17 +118,19 @@ export default class MainCard extends Component {
                         </Text>
                     </View>
                 </View>
-
                 <LinearGradient colors={[Colors.lightBlue, Colors.lightRed]} style={styles.BottomBar} start={[0, 0]} end={[1, 1]} >
-                    <TouchableOpacity activeOpacity={1} style={styles.BottomBarContent} onPress={this._likeHandle}>
+
+                    <BaseButton style={styles.BottomBarContent} onPress={this._likeHandle}>
                         {this.state.isLiked == true ? <HeartFill /> : <HeartEmpty />}
-                        <Text style={{ color: 'white', marginLeft: 8 }}>좋아요</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this._commentHandle} style={{ height: '100%', justifyContent: 'center' }}><Text style={{ color: 'white' }} >댓글</Text></TouchableOpacity>
-                    <TouchableOpacity activeOpacity={1} style={styles.BottomBarContent} onPress={this._bookmarkHandle}>
+                        <Text style={{ color: 'white', marginLeft: 8, fontSize: 14 }}>좋아요</Text>
+                    </BaseButton>
+                    <BaseButton onPress={this._commentHandle} style={{ height: '100%', justifyContent: 'center', flex: 1, alignItems: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: 14 }} >댓글</Text>
+                    </BaseButton>
+                    <BaseButton style={styles.BottomBarContent} onPress={this._bookmarkHandle}>
                         {this.state.isBookmarked == true ? <BookmarkFill /> : <BookmarkEmpty />}
-                        <Text style={{ color: 'white', marginLeft: 8 }}>북마크</Text>
-                    </TouchableOpacity>
+                        <Text style={{ color: 'white', marginLeft: 8, fontSize: 14 }}>북마크</Text>
+                    </BaseButton>
                 </LinearGradient>
             </View>
         )
@@ -217,13 +221,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingLeft: 20,
-        paddingRight: 20,
+        overflow: 'hidden'
     },
     BottomBarContent: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: '100%'
+        justifyContent: 'center',
+        height: '100%',
+        flex: 1
     }
 })

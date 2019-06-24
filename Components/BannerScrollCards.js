@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { Colors } from '../Asset';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { Colors } from './Asset';
 import MealIcon from '../Icons/cardTimetable.svg';
 import EnterIcon from '../Icons/cardEnter.svg';
 import MoreIcon from '../Icons/cardMore.svg';
@@ -99,7 +100,7 @@ export class Timetable extends Component {
 }
 export class Notification extends Component {
     _buttonHandle = () => {
-
+        this.props.navigation.navigate('Notification');
     }
 
     render() {
@@ -161,8 +162,8 @@ export class Traffic extends Component {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text style={{ lineHeight: 20, fontSize: 14, color: Colors.fontBlack }}>구성방면</Text><Text>{this.state.subway.gusung}</Text></View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6 }}><Text style={{ lineHeight: 20, fontSize: 14, color: Colors.fontBlack }}>죽전방면</Text><Text>{this.state.subway.Jukjeon}</Text></View>
                     <View style={{ width: 100, alignSelf: 'center', borderBottomColor: '#dbdbdb', borderBottomWidth: 1, marginBottom: 6, marginTop: 6 }} />
-                    <TouchableWithoutFeedback onPress={this._busHandle}>
-                        <View>
+                    <BorderlessButton onPress={this._busHandle}>
+                        <View accessible>
                             {bus.map(
                                 (info, index) => (
                                     <View key={index} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 6, marginBottom: 3 }}>
@@ -176,7 +177,7 @@ export class Traffic extends Component {
                             )}
                             {bus.length < 4 ? <Plus style={{ alignSelf: 'center', marginTop: 5 }} /> : null}
                         </View>
-                    </TouchableWithoutFeedback>
+                    </BorderlessButton>
                 </View>
 
                 <View style={styles.ButtonConainer}>

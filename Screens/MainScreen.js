@@ -3,15 +3,15 @@ import { StyleSheet, View, ScrollView, StatusBar, Dimensions, Text, TouchableOpa
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { LinearGradient } from 'expo';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
-import Card from './Components/MainCard';
-import MainTitle from './Components/MainTitle';
-import BannerScroll from './Components/BannerScroll';
-import ProfileGroups from './Components/ProfileGroups';
-import ArrowLeft from './Icons/arrowLeft.svg';
-import ArrowRight from './Icons/arrowRight.svg';
-import ArrowDown from './Icons/arrowDown.svg';
-import GoupArrow from './Icons/goUpArrow.svg';
-import ArrowBack from './Icons/arrowBack2.svg';
+import Card from '../Components/MainCard';
+import MainTitle from '../Components/MainTitle';
+import BannerScroll from '../Components/BannerScroll';
+import ProfileGroups from '../Components/ProfileGroups';
+import ArrowLeft from '../Icons/arrowLeft.svg';
+import ArrowRight from '../Icons/arrowRight.svg';
+import ArrowDown from '../Icons/arrowDown.svg';
+import GoupArrow from '../Icons/goUpArrow.svg';
+import ArrowBack from '../Icons/arrowBack2.svg';
 
 import ExamScreen from './ExamScreen';
 import ContestScreen from './ContestScreen';
@@ -30,10 +30,12 @@ const Tag = [
 ];
 const Image = [
     "https://i.ytimg.com/vi/X8jcnDCMVN4/maxresdefault.jpg",
-    "https://i.ytimg.com/vi/mCprd08bjiA/maxresdefault.jpg"
+    "https://i.ytimg.com/vi/mCprd08bjiA/maxresdefault.jpg",
+    "https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
 ];
 const Image2 = [
-    "https://t1.daumcdn.net/cfile/tistory/22144F3A58443EF92E"
+    "https://t1.daumcdn.net/cfile/tistory/22144F3A58443EF92E",
+    "https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
 ]
 const Content = "마리가 도망친게 이해가 될듯 말듯.... 어쩌면 마리가 정말 사랑한건 루벤보다도 루벤에게 사랑받고 아름답게 보여지는 자신의 모습 아닐까....";
 
@@ -151,6 +153,7 @@ export default class MainScreen extends Component {
                         <View style={styles.Cards}>
                             <Card navigation={this.props.navigation} name='김종현' date='2분전' like={5} commentNum={12} isLiked={false} isBookmarked={true} tag={Tag} image={Image} ratio={9 / 16} content={Content} />
                             <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} image={Image2} ratio={51 / 68} content={Content} />
+                            <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} content={Content} />
                             {goUpButton}
                         </View>
 
