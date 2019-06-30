@@ -114,8 +114,8 @@ export default class ProfileGroups extends Component {
                             </View>
                             {this.state.clicked == 2 && !this.state.delaying ?
                                 <View style={styles.Content}>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>게시물</Text><Text style={styles.ContentValue2}>{_post}</Text></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>댓글</Text><Text style={styles.ContentValue2}>{_commnet}</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPost')} style={styles.ContentView}><Text style={styles.ContentTitle}>게시물</Text><Text style={styles.ContentValue2}>{_post}</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyComment')} style={styles.ContentView}><Text style={styles.ContentTitle}>댓글</Text><Text style={styles.ContentValue2}>{_commnet}</Text></TouchableOpacity>
                                     <TouchableOpacity style={styles.ContentView} onPress={this._feedHandle}><Text style={styles.ContentTitle}>새알림</Text><Text style={styles.ContentValue2}>{this.state.feed}</Text></TouchableOpacity>
                                 </View> :
                                 <Text style={{ color: 'white', fontFamily: 'nanumbarungothic', fontSize: 16, textAlign: 'center', marginTop: 46 }}>{this.state.feed > 0 && !this.state.delaying ? this.state.feed : null}</Text>}
@@ -131,8 +131,8 @@ export default class ProfileGroups extends Component {
                             </View>
                             {this.state.clicked == 3 && !this.state.delaying ?
                                 <View style={styles.Content}>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Bookmark')} style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Search')} style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')} style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite style={styles.contentValue3} /></TouchableOpacity>
                                 </View> : null}
                         </LinearGradient>

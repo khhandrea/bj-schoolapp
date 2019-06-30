@@ -79,7 +79,8 @@ export default class CommentScreen extends Component {
             ratio: null,
             comments: Comments,
             clickedComment: null,
-            visible: false
+            visible: false,
+            value: '',
         }
         setTimeout(() => {
             this.setState({ loading: true });
@@ -153,7 +154,8 @@ export default class CommentScreen extends Component {
     }
 
     _commentAddHandle = () => {
-
+        //업로드
+        this.setState({ value: '' });
     }
     _commentHandle(id) { //클릭
         if (this.state.clickedComment == id) {
@@ -194,7 +196,7 @@ export default class CommentScreen extends Component {
                         </Text>
 
                         {data.image ?
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => {
+                            <TouchableOpacity activeOpacity={1} onPress={() => {
                                 this.props.navigation.navigate('Photo', { image: data.image.source });
                             }} style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio), borderRadius: 20, overflow: 'hidden', marginVertical: 5 }}>
                                 <Image style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) }} source={{ uri: data.image.source }} />
@@ -253,7 +255,7 @@ export default class CommentScreen extends Component {
                             <Entypo name='attachment' color='white' size={22} style={{ margin: 0 }} />
                         </TouchableOpacity>
                         <View style={styles.TextInputContainer}>
-                            <TextInput maxLength={240} multiline={true} ref={myInput => this.myInput = myInput} placeholder={this.state.clickedComment != null ? `${this.state.comments[this.state.clickedComment].name}에게 댓글 달기...` : '댓글 달기...'} style={styles.TextInput} />
+                            <TextInput value={this.state.value} onChangeText={(text) => this.setState({ value: text })} maxLength={240} multiline={true} ref={myInput => this.myInput = myInput} placeholder={this.state.clickedComment != null ? `${this.state.comments[this.state.clickedComment].name}에게 댓글 달기...` : '댓글 달기...'} style={styles.TextInput} />
                             <TouchableOpacity onPress={this._commentAddHandle} style={{ width: 30, height: 20, alignItems: 'center', flexDirection: 'row', padding: 0 }}>
                                 <Text style={{ color: Colors.highlightBlue, textAlign: 'right', lineHeight: 20 }}>게시</Text>
                             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, StatusBar, Dimensions, Text, TouchableOpacity, Platform, BackHandler } from 'react-native';
+import { StyleSheet, View, ScrollView, StatusBar, Dimensions, Text, TouchableOpacity, Platform, BackHandler, Animated } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { LinearGradient } from 'expo';
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
@@ -37,7 +37,7 @@ const Image2 = [
     "https://t1.daumcdn.net/cfile/tistory/22144F3A58443EF92E",
     "https://media.istockphoto.com/photos/hands-forming-a-heart-shape-with-sunset-silhouette-picture-id636379014?k=6&m=636379014&s=612x612&w=0&h=tnYrf_O_nvT15N4mmjorIRvZ7lK4w1q1c7RSfrVmqKA="
 ]
-const Content = "마리가 도망친게 이해가 될듯 말듯.... 어쩌면 마리가 정말 사랑한건 루벤보다도 루벤에게 사랑받고 아름답게 보여지는 자신의 모습 아닐까....";
+const Content = "마리가 도망친게 이해가 될듯 말듯.... 어쩌면 마리가 정말 사랑한건 루벤보다도 루벤에게 사랑받고 아름답게 보여지는 자신의 모습 아닐까....\nhttps://t1.daumcdn.net/cfile/tistory/22144F3A58443EF92E";
 
 
 
@@ -48,7 +48,8 @@ export default class MainScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isExam: true,
+            portiereOpacity: new Animated.Value(0),
+            isPortiereOn: false,
         }
     }
     _scrollUpClicked = () => {
@@ -56,25 +57,21 @@ export default class MainScreen extends Component {
     }
 
     _examHandle = () => {
-        this.setState({ isExam: true });
-
-        setTimeout(() => {
-            setTimeout(() => {
-                this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-                this.drawer.openDrawer();
-            }, 1)
-        }, 1)
-
+        this.props.navigation.navigate('Exam');
+        this._activePortiere();
     }
     _contestHandle = () => {
-        this.setState({ isExam: false });
-        setTimeout(() => {
-            setTimeout(() => {
-                this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-                this.drawer.openDrawer();
-            }, 1)
-        }, 1)
+        this.props.navigation.navigate('Contest');
+        this._activePortiere();
+    }
+    _activePortiere = () => {
+        this.setState({ isPortiereOn: true })
+        Animated.timing(this.state.portiereOpacity, { toValue: 1, duration: 750 }).start();
 
+        setTimeout(() => {
+            this.setState({ isPortiereOn: false })
+            Animated.timing(this.state.portiereOpacity, { toValue: 0, duration: 0 }).start();
+        }, 1000)
 
     }
     _drawerClose = () => {
@@ -111,7 +108,7 @@ export default class MainScreen extends Component {
         return (
             <View style={{ flex: 1 }} onStartShouldSetResponder={() => true}
                 onResponderStart={this._touchDown}>
-                <DrawerLayout
+                {/* <DrawerLayout
                     ref={drawer => {
                         this.drawer = drawer;
                     }}
@@ -121,46 +118,47 @@ export default class MainScreen extends Component {
                     drawerBackgroundColor="#fff"
                     drawerLockMode='locked-open'
                     onDrawerClose={this._drawerClose}
-                    renderNavigationView={this.state.isExam ? renderExam : renderContest}>
-                    <ScrollView showsVerticalScrollIndicator={false} ref='_scrollView' overScrollMode={"never"} >
+                    renderNavigationView={this.state.isExam ? renderExam : renderContest}> */}
+                <ScrollView showsVerticalScrollIndicator={false} ref='_scrollView' overScrollMode={"never"} >
 
-                        <StatusBar barStyle={Platform.OS == "android" ? "light-content" : "dark-content"} backgroundColor='#00000080' translucent={true} />
+                    <StatusBar barStyle={Platform.OS == "android" ? "light-content" : "dark-content"} backgroundColor='#00000080' translucent={true} />
 
-                        <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.TopContainer} start={[0, 0]} end={[1, 1]} >
-                            <MainTitle />
-                            <BannerScroll navigation={this.props.navigation} />
-                            <View style={styles.BottomContainer} />
-                        </LinearGradient>
+                    <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.TopContainer} start={[0, 0]} end={[1, 1]} >
+                        <MainTitle />
+                        <BannerScroll navigation={this.props.navigation} />
+                        <View style={styles.BottomContainer} />
+                    </LinearGradient>
 
 
-                        <View style={{ width: '100%', marginTop: 10, flex: 1, alignItems: 'center' }}>
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                <TouchableOpacity onPress={this._examHandle} style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', marginLeft: 24 }}>
-                                    <ArrowLeft />
-                                    <Text style={{ marginLeft: 6, fontSize: 14, }}>시험 D-{_dday}</Text>
-                                </TouchableOpacity>
-                                <Text style={{ flex: 1, fontSize: 14, textAlign: 'center' }}>질문/정보</Text>
-                                <TouchableOpacity onPress={this._contestHandle} style={{ flex: 1, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center', marginRight: 24 }}>
-                                    <Text style={{ marginRight: 6, fontSize: 14, textAlign: 'right' }}>수행/대회</Text>
-                                    <ArrowRight />
-                                </TouchableOpacity>
-                            </View>
-                            <ArrowDown style={{ flex: 1, marginTop: 6 }} />
+                    <View style={{ width: '100%', marginTop: 10, flex: 1, alignItems: 'center' }}>
+                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                            <TouchableOpacity onPress={this._examHandle} style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', marginLeft: 24 }}>
+                                <ArrowLeft />
+                                <Text style={{ marginLeft: 6, fontSize: 14, }}>시험 D-{_dday}</Text>
+                            </TouchableOpacity>
+                            <Text style={{ flex: 1, fontSize: 14, textAlign: 'center' }}>질문/정보</Text>
+                            <TouchableOpacity onPress={this._contestHandle} style={{ flex: 1, justifyContent: 'flex-end', flexDirection: 'row', alignItems: 'center', marginRight: 24 }}>
+                                <Text style={{ marginRight: 6, fontSize: 14, textAlign: 'right' }}>수행/대회</Text>
+                                <ArrowRight />
+                            </TouchableOpacity>
                         </View>
+                        <ArrowDown style={{ flex: 1, marginTop: 6 }} />
+                    </View>
 
-                        <ProfileGroups navigation={this.props.navigation} />
+                    <ProfileGroups navigation={this.props.navigation} />
 
-                        <View style={styles.Cards}>
-                            <Card navigation={this.props.navigation} name='김종현' date='2분전' like={5} commentNum={12} isLiked={false} isBookmarked={true} tag={Tag} image={Image} ratio={9 / 16} content={Content} />
-                            <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} image={Image2} ratio={51 / 68} content={Content} />
-                            <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} content={Content} />
-                            {goUpButton}
-                        </View>
+                    <View style={styles.Cards}>
+                        <Card navigation={this.props.navigation} name='김종현' date='2분전' like={5} commentNum={12} isLiked={false} isBookmarked={true} tag={Tag} image={Image} ratio={9 / 16} content={Content} />
+                        <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} image={Image2} ratio={51 / 68} content={Content} />
+                        <Card navigation={this.props.navigation} name='김종현' date='2분전' like={12} commentNum={2} isLiked={true} isBookmarked={false} tag={Tag} content={Content} />
+                        {goUpButton}
+                    </View>
 
 
 
-                    </ScrollView >
-                </DrawerLayout>
+                </ScrollView >
+                {/* </DrawerLayout> */}
+                {this.state.isPortiereOn && <Animated.View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: '#000000aa', opacity: this.state.portiereOpacity }} />}
             </View>
         )
     }

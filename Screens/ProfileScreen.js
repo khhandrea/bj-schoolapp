@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, Picker, Modal, TouchableWithoutFeedback } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, Modal, TouchableWithoutFeedback } from 'react-native'
 import { Colors } from '../Components/Asset';
 import { BaseButton } from 'react-native-gesture-handler';
 
@@ -10,7 +10,7 @@ let myNumber = '20702';
 const myWidth = 230;
 const gradList = [1, 2, 3];
 const classlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-const numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34];
+const numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 export default class ProfileScreen extends Component {
     static navigationOptions = { title: '내 정보' };

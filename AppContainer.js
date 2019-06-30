@@ -10,6 +10,12 @@ import CameraScreen from './Screens/CameraScreen'
 import BusScreen from './Screens/BusScreen';
 import PostScreen, { ContentScreen } from './Screens/PostScreen';
 import NotificationScreen from './Screens/NotificationScreen';
+import { MyPostScreen, MyCommentScreen, BookmarkScreen } from './Screens/PostDataScreen';
+import DetailScreen from './Screens/DetailScreen';
+import SearchScreen from './Screens/SearchScreen';
+import ContestScreen from './Screens/ContestScreen';
+import ExamScreen from './Screens/ExamScreen';
+
 import { BaseButton } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -54,6 +60,7 @@ const RightTransition = (index, position, width) => {
         transform: [{ translateX: transition }]
     }
 }
+
 const LeftTransition = (index, position, width) => {
     const sceneRange = [index - 1, index, index + 1];
     const outputWidth = [-width, 0, 0];
@@ -77,16 +84,19 @@ const NavigationConfig = () => {
             const width = sceneProps.layout.initWidth;
             const routeName = scene.route.routeName;
 
+            if (routeName == 'Contest') {
+                return RightTransition(index, position, width);
+            } else if (routeName == 'Exam') {
+                return LeftTransition(index, position, width);
+            }
+
             if (Platform.OS == 'ios') {
                 return RightTransition(index, position, width);
             }
-            if (routeName == "Exam") {
-                return LeftTransition(index, position, width);
-            }
-            else if (routeName == "Contest" || routeName == "Comment") {
+            else if (routeName == "Comment") {
                 return RightTransition(index, position, width);
             }
-            else if (routeName == "Photo" || routeName == "Bus" || "Notification") {
+            else if (routeName == "Photo" || routeName == "Bus" || routeName == "Notification") {
                 return BottomTransition(index, position, height);
             }
 
@@ -108,6 +118,13 @@ const AppNavigator = createStackNavigator(
         Post: PostScreen,
         Post_Content: ContentScreen,
         Notification: NotificationScreen,
+        MyPost: MyPostScreen,
+        MyComment: MyCommentScreen,
+        Bookmark: BookmarkScreen,
+        Detail: DetailScreen,
+        Search: SearchScreen,
+        Contest: ContestScreen,
+        Exam: ExamScreen
     },
     {
         transitionConfig: NavigationConfig,

@@ -145,7 +145,7 @@ export default class PostScreen extends Component {
                                             }}>
                                                 <View style={{ height: 130, width: 130 * (this.state.ratio > MaxRatio ? MaxRatio : this.state.ratio < 1 / MaxRatio ? 1 / MaxRatio : this.state.ratio) }}>
                                                     <Image accessible source={{ uri: data }} style={{ height: 130, width: 130 * (this.state.ratio > MaxRatio ? MaxRatio : this.state.ratio < 1 / MaxRatio ? 1 / MaxRatio : this.state.ratio) }} />
-                                                    <Ionicons name='ios-close' color='black' size={30} style={{ position: 'absolute', right: 8, top: 8 }} />
+                                                    <Ionicons name='ios-close' color='white' size={30} style={{ position: 'absolute', right: 16, top: 6 }} />
                                                 </View>
                                             </TouchableWithoutFeedback>
                                         </View>
