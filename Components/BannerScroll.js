@@ -72,9 +72,9 @@ export default class BannerScroll extends Component {
     }
     render() {
         return (
-            <View style={styles.Container}>
-                <View style={styles.ScrollViewHolder}>
-                    <ScrollView horizontal={true} style={styles.ScrollView} showsHorizontalScrollIndicator={false} overScrollMode={"never"} ref={(ref) => this.myScroll = ref}
+            <View style={styles2.Container}>
+                <View style={styles2.ScrollViewHolder}>
+                    <ScrollView horizontal={true} style={styles2.ScrollView} showsHorizontalScrollIndicator={false} overScrollMode={"never"} ref={(ref) => this.myScroll = ref}
                         onScroll={event => this._handleScroll(event.nativeEvent.contentOffset.x)} scrollEventThrottle={16} nestedScrollEnabled={true}>
                         <View style={{ width: (WIDTH - 318) / 2 }} />
                         <Timetable navigation={this.props.navigation} schedule={Schedule} />
@@ -85,7 +85,7 @@ export default class BannerScroll extends Component {
                     </ScrollView>
                 </View>
 
-                <View style={styles.GenreContainer}>
+                <View style={styles2.GenreContainer}>
                     <TouchableWithoutFeedback onPress={() => this._scrollCtrl(0)}>{this.state.xOffset < SCROLLUNIT ? <TimetableIcon /> : <TimetableIconLight />}</TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => this._scrollCtrl(SCROLLUNIT * 2 + ((WIDTH - 318) / 2))}>{this.state.xOffset < SCROLLUNIT * 3 ? <MealIcon /> : <MealIconLight />}</TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => this._scrollCtrl(SCROLLUNIT * 2 + ((WIDTH - 318) / 2))}>{this.state.xOffset > SCROLLUNIT * 1 ? <BusIcon /> : <BusIconLight />}</TouchableWithoutFeedback>
@@ -96,7 +96,7 @@ export default class BannerScroll extends Component {
     }
 }
 
-const styles = StyleSheet.create({
+const styles2 = StyleSheet.create({
     Container: {
         alignItems: 'center',
     },

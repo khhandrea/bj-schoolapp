@@ -15,6 +15,8 @@ import DetailScreen from './Screens/DetailScreen';
 import SearchScreen from './Screens/SearchScreen';
 import ContestScreen from './Screens/ContestScreen';
 import ExamScreen from './Screens/ExamScreen';
+import SettingScreen from './Screens/SettingScreen';
+import TabViewScreen from './Screens/TabViewScreen';
 
 import { BaseButton } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
@@ -124,11 +126,13 @@ const AppNavigator = createStackNavigator(
         Detail: DetailScreen,
         Search: SearchScreen,
         Contest: ContestScreen,
-        Exam: ExamScreen
+        Exam: ExamScreen,
+        Setting: SettingScreen,
+        TabView: TabViewScreen
     },
     {
         transitionConfig: NavigationConfig,
-        initialRouteName: 'Main',
+        initialRouteName: 'TabView',
         defaultNavigationOptions: ({ navigation }) => ({
             headerStyle: {
                 height: 50

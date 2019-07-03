@@ -83,6 +83,120 @@ const Data = {
             key: 10,
             ready: false, //로컬의 저장
         },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
+        {
+            subject: '수학',
+            title: '친구들이 정해준 형용사로 영어 자기소개하기',
+            executionDate: '2월 첫쨋주~둘쨋주',
+            totalGrade: 10,
+            others: [
+                '외워서 할 것, 읽으면 감점 3점',
+                '그림과 연관 지을 것',
+                '친구들 발표내용 평가하여 적어낼 것'
+            ],
+            commentNum: 5,
+            date: '07.05',
+            image: [
+                'https://images.unsplash.com/photo-1483691278019-cb7253bee49f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                'https://ichef.bbci.co.uk/news/976/cpsprodpb/100F8/production/_104348756_stephencheatley-electricblackpool.jpg'
+            ],
+            key: 10,
+            ready: false, //로컬의 저장
+        },
     ],
     contest: [
         {
@@ -225,7 +339,7 @@ export default class ContestScreen extends Component {
 
                     <View style={{ height: 40, width: '100%', borderRadius: 20, overflow: 'hidden' }}>
                         <LinearGradient colors={[Colors.lightBlue, Colors.lightRed]} style={{ width: '100%', height: '100%', flexDirection: 'row' }} start={[1, 0]} end={[0, 1]} >
-                            <BaseButton onPress={() => {
+                            {data.image.length !== 0 && <BaseButton onPress={() => {
                                 if (data.image.length !== 0) {
                                     this.props.navigation.navigate('Photo', { image: data.image, index: 0 })
                                 } else {
@@ -233,7 +347,7 @@ export default class ContestScreen extends Component {
                                 }
                             }} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>사진보기</Text>
-                            </BaseButton>
+                            </BaseButton>}
                             <BaseButton onPress={() => this.props.navigation.navigate('Comment', { key: data.key })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>댓글</Text>
                             </BaseButton>
@@ -298,7 +412,7 @@ export default class ContestScreen extends Component {
 
                     <View style={{ height: 40, width: '100%', borderRadius: 20, overflow: 'hidden' }}>
                         <LinearGradient colors={[Colors.lightRed, Colors.lightBlue]} style={{ width: '100%', height: '100%', flexDirection: 'row' }} start={[1, 0]} end={[0, 1]} >
-                            <BaseButton onPress={() => {
+                            {data.image.length !== 0 && <BaseButton onPress={() => {
                                 if (data.image.length !== 0) {
                                     this.props.navigation.navigate('Photo', { image: data.image, index: 0 })
                                 } else {
@@ -306,7 +420,7 @@ export default class ContestScreen extends Component {
                                 }
                             }} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>사진보기</Text>
-                            </BaseButton>
+                            </BaseButton>}
                             <BaseButton onPress={() => this.props.navigation.navigate('Comment', { key: data.key })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>댓글</Text>
                             </BaseButton>
@@ -328,10 +442,9 @@ export default class ContestScreen extends Component {
         return (
             <ScrollView showsVerticalScrollIndicator={false}>
                 <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.Header} start={[1, 0]} end={[0, 1]} >
-                    <View style={styles.HeaderContainer}>
+                    <View style={{ paddingHorizontal: 20, height: 40, marginTop: 40, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 30, fontFamily: 'nanumbarungothic', color: 'white' }}>수행/대회</Text>
-                        <TouchableOpacity style={{
-                        }} onPress={() => this.props.navigation.goBack()}>
+                        <TouchableOpacity style={{ position: 'absolute', right: 16, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }} onPress={() => this.props.jumpTo('second')}>
                             <ArrowBack />
                         </TouchableOpacity>
                     </View>
@@ -343,8 +456,11 @@ export default class ContestScreen extends Component {
                                 </View>
                                 {this.state.homeworkData.map((data, index) =>
                                     <View key={index} style={{ width: '100%', height: 50, alignItems: 'center', justifyContent: 'center', borderBottomColor: '#dbdbdb', borderBottomWidth: 0.5 }}>
-                                        <Text style={{ fontSize: 16 }}>{data.subject}{data.ready ? ' (준비완료)' : ''}</Text>
+                                        <Text style={{ fontSize: 16 }}>{data.subject}</Text>
                                         <Text style={{ fontSize: 12, marginTop: 3 }}>{data.executionDate}</Text>
+                                        {data.ready && <View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Feather name='check' size={40} color={Colors.red} />
+                                        </View>}
                                     </View>
                                 )}
                             </View>

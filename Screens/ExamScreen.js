@@ -9,7 +9,7 @@ import { BaseButton } from 'react-native-gesture-handler';
 
 
 const SCREENWIDTH = Dimensions.get('window').width;
-let _dday = 24; //constructure 에서 선언
+let date = '7/1~7/5'; //constructure 에서 선언
 
 const Data = {
     examTimetable: 'http://mblogthumb1.phinf.naver.net/MjAxNzA5MTNfMjA1/MDAxNTA1MzA5OTU4ODMx.POt-NKLlmaR_bSv9CO9gy0iMXKsInanpykrbrx1z4ggg.qX1hVbBYMMGjUhRb64BrF0H2sXGRNC4I3IpshqPTipYg.PNG.take_mentor/%EA%B5%AC%EB%A6%AC%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90.png?type=w2',
@@ -124,7 +124,7 @@ export default class ExamScreen extends Component {
 
                     <View style={{ height: 40, width: '100%', borderRadius: 20, overflow: 'hidden' }}>
                         <LinearGradient colors={[Colors.lightRed, Colors.lightBlue]} style={{ width: '100%', height: '100%', flexDirection: 'row' }} start={[1, 0]} end={[0, 1]} >
-                            <BaseButton onPress={() => {
+                            {data.image.length !== 0 && <BaseButton onPress={() => {
                                 if (data.image.length !== 0) {
                                     this.props.navigation.navigate('Photo', { image: data.image, index: 0 })
                                 } else {
@@ -133,7 +133,7 @@ export default class ExamScreen extends Component {
                             }
                             } style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>사진보기</Text>
-                            </BaseButton>
+                            </BaseButton>}
                             <BaseButton onPress={() => this.props.navigation.navigate('Comment', { key: data.key })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 14, color: 'white' }}>댓글</Text>
                             </BaseButton>
@@ -154,11 +154,10 @@ export default class ExamScreen extends Component {
         return (
             <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
                 <LinearGradient colors={['#C2C7FB', '#FCBEC0']} style={styles.Header} start={[1, 0]} end={[0, 1]} >
-
-                    <View style={styles.HeaderContainer}>
-                        <Text style={{ fontSize: 30, fontFamily: 'nanumbarungothic', color: 'white' }}>시험정보</Text>
-                        <TouchableOpacity style={{
-                        }} onPress={() => this.props.navigation.goBack()}>
+                    <View style={{ paddingHorizontal: 20, height: 40, marginTop: 40, flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 28, fontFamily: 'nanumbarungothic', color: 'white' }}>시험정보</Text>
+                        <Text style={{ marginLeft: 6, marginTop: 9, fontSize: 14, color: '#ffffff80', fontFamily: 'nanumbarungothic' }}>{date}</Text>
+                        <TouchableOpacity style={{ position: 'absolute', right: 16, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }} onPress={() => this.props.jumpTo('second')}>
                             <ArrowBack />
                         </TouchableOpacity>
                     </View>
@@ -193,14 +192,6 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,
 
-    },
-    HeaderContainer: {
-        paddingLeft: 20,
-        paddingRight: 15,
-        marginTop: 40,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
     },
     WhiteBox: {
         width: SCREENWIDTH - 40,

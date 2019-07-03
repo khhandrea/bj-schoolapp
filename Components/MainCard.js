@@ -22,7 +22,8 @@ export default class MainCard extends Component {
             readMoreClicked: false,
             isLiked: this.props.isLiked,
             isBookmarked: this.props.isBookmarked,
-            like: this.props.like
+            like: this.props.like,
+            view: false,
         }
     }
     _imageClicked(source) {
@@ -61,7 +62,7 @@ export default class MainCard extends Component {
         this.props.navigation.navigate('Comment');
     }
     render() {
-        const { name, date, commentNum, content, image, tag, ratio } = this.props;
+        const { name, date, commentNum, content, image, tag, ratio, lowDataMode } = this.props;
 
         const tagList = tag ? tag.map(
             (text, index) => (
@@ -94,15 +95,21 @@ export default class MainCard extends Component {
                     <TouchableWithoutFeedback style={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}><Dots /></TouchableWithoutFeedback>
                 </View>
 
-                {imageList != null ?
+                {imageList != null ? !lowDataMode || this.state.view ?
                     <View style={styles.ImageContainer}>
                         <ScrollView overScrollMode={"never"} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false} onScroll={this._scrollHandle} scrollEventThrottle={16}>
                             {imageList}
-
                         </ScrollView>
                         {image.length > 1 ?
                             <View style={styles.ImageNav}><Text style={{ color: 'white', fontSize: 12 }}>{this.state.myPage}/{image.length}</Text></View> : null}
-                    </View> : null}
+                    </View>
+                    :
+                    <BaseButton onPress={() => {
+                        this.setState({ view: true });
+                    }} style={{ width: '100%', height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 14, color: Colors.highlightBlue }}>사진보기(데이터 절약모드)</Text>
+                    </BaseButton>
+                    : null}
 
                 {tagList != null ? <View style={styles.TagContainer}>
                     {tagList}

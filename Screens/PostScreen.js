@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ActivityIndicator, ScrollView, TextInput, TouchableWithoutFeedback, Dimensions, Platform, Image, ActionSheetIOS } from 'react-native'
+import { Text, StyleSheet, View, ActivityIndicator, ScrollView, TextInput, TouchableWithoutFeedback, Dimensions, Platform, Image, ActionSheetIOS, Linking, ToastAndroid } from 'react-native'
 import { ImagePicker, Permissions, LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../Components/Asset'
 import { BorderlessButton, RectButton, BaseButton } from 'react-native-gesture-handler';
 import MyActionSheet from '../Components/MyActionSheet';
+import { IntentLauncherAndroid as IntentLauncher } from 'expo';
 
 const WIDTH = Dimensions.get('window').width;
 const MaxRatio = 1.5;
@@ -82,8 +83,13 @@ export default class PostScreen extends Component {
         const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
         if (permission.status !== 'granted') {
             const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            if (newPermission.status === 'granted') {
-                //its granted.
+            if (newPermission.status === 'denied') {
+                if (Platform.OS === 'ios') {
+                    Linking.openURL('app-settings:')
+                } else {
+                    ToastAndroid.show('스크랩 > 권한 > 저장공간 활성화', ToastAndroid.LONG);
+                    IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_SETTINGS);
+                }
             }
         }
         else {

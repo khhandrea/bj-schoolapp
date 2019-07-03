@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, TouchableWithoutFeedback, ActivityIndicator, Linking, Platform } from 'react-native';
+import { IntentLauncherAndroid as IntentLauncher } from 'expo';
 import { Permissions } from 'expo-permissions';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Camera } from 'expo-camera';
+import { Colors } from '../Components/Asset'
 import LightOn from '../Icons/cameraLightOn.svg';
 import LightOff from '../Icons/cameraLightOff.svg';
 import SnapIcon from '../Icons/cameraSnap.svg';
@@ -65,7 +67,18 @@ export default class CameraScreen extends Component {
         if (hasCameraPermission === null) {
             return <View />;
         } else if (hasCameraPermission === false) {
-            return <Text>No access to camera</Text>;
+            return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <TouchableOpacity onPress={() => {
+                    if (Platform.OS === 'ios') {
+                        Linking.openURL('app-settings:')
+                    } else {
+                        ToastAndroid.show('스크랩 > 권한 > 카메라 활성화', ToastAndroid.LONG);
+                        IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_SETTINGS);
+                    }
+                }}>
+                    <Text style={{ fontSize: 14, color: Colors.highlightBlue }}>카메라 권한 설정하기</Text>
+                </TouchableOpacity>
+            </View>;
         } else {
             return (
                 <View style={{ flex: 1 }}>

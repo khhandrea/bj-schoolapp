@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, Platform, ActivityIndicator } from 'react-native'
+import { Text, StyleSheet, View, Keyboard, TextInput, Dimensions, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, Platform, ActivityIndicator, Linking, ToastAndroid, AsyncStorage } from 'react-native'
 import { Colors } from '../Components/Asset';
 import { Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { ImagePicker, Permissions, LinearGradient } from 'expo';
 import MyActionSheet from '../Components/MyActionSheet';
+import { IntentLauncherAndroid as IntentLauncher } from 'expo';
+import { BaseButton } from 'react-native-gesture-handler';
+
 
 
 
@@ -26,7 +29,7 @@ const Comments = [
         rank: 3,
         name: '홍사훈',
         content: '안녕하살법 받아치기',
-        image: { source: 'https://img.insight.co.kr/static/2019/05/14/700/255ocxbanba3n956n6w7.jpg', ratio: 7 / 4 },
+        image: { source: 'https://img.insight.co.kr/static/2019/05/14/700/255ocxbanba3n956n6w7.jpg', ratio: 7 / 4, view: false },
         time: '4분전',
         like: 2,
         iLiked: true,
@@ -59,7 +62,7 @@ const Comments = [
         rank: 5,
         name: '김세준',
         content: 'ㅂㅇㄹ',
-        image: { source: 'https://t1.daumcdn.net/cfile/tistory/99F2DC355C54E50E27', ratio: 1 },
+        image: { source: 'https://t1.daumcdn.net/cfile/tistory/99F2DC355C54E50E27', ratio: 1, view: false },
         time: '5분전',
         like: 0,
         iLiked: false,
@@ -81,17 +84,17 @@ export default class CommentScreen extends Component {
             clickedComment: null,
             visible: false,
             value: '',
+            lowDataMode: true,
         }
-        setTimeout(() => {
-            this.setState({ loading: true });
-        }, 700)
-
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
 
+        let lowData = await AsyncStorage.getItem('ISLOWDATA');
+        lowData = lowData === null ? false : lowData === 'true' ? true : false;
+        this.setState({ lowDataMode: lowData, loading: true });
     }
 
     componentWillUnmount() {
@@ -127,8 +130,13 @@ export default class CommentScreen extends Component {
         const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
         if (permission.status !== 'granted') {
             const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            if (newPermission.status === 'granted') {
-                //its granted.
+            if (newPermission.status === 'denied') {
+                if (Platform.OS === 'ios') {
+                    Linking.openURL('app-settings:')
+                } else {
+                    ToastAndroid.show('스크랩 > 권한 > 저장공간 활성화', ToastAndroid.LONG);
+                    IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_SETTINGS);
+                }
             }
         }
         else {
@@ -195,11 +203,20 @@ export default class CommentScreen extends Component {
                             </Text>
                         </Text>
 
-                        {data.image ?
+                        {data.image ? !this.state.lowDataMode || data.image.view ?
                             <TouchableOpacity activeOpacity={1} onPress={() => {
                                 this.props.navigation.navigate('Photo', { image: data.image.source });
                             }} style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio), borderRadius: 20, overflow: 'hidden', marginVertical: 5 }}>
                                 <Image style={{ width: data.isParent ? WIDTH - 100 : WIDTH - 150, height: data.isParent ? (WIDTH - 100) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) : (WIDTH - 150) / (data.image.ratio > MaxRatio ? MaxRatio : data.image.ratio < 1 / MaxRatio ? 1 / MaxRatio : data.image.ratio) }} source={{ uri: data.image.source }} />
+                            </TouchableOpacity> :
+                            <TouchableOpacity style={{ justifyContent: 'center', height: 30 }} onPress={() => {
+                                let d = this.state.comments;
+                                d[index].image.view = true;
+                                this.setState({ comments: d });
+                            }}>
+                                <View>
+                                    <Text style={{ fontSize: 14, color: Colors.highlightBlue }}>사진보기(데이터 절약모드)</Text>
+                                </View>
                             </TouchableOpacity>
                             : null}
 

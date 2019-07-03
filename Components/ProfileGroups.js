@@ -20,10 +20,10 @@ export default class ProfileGroups extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            profile: new Animated.Value(200),
+            profile: new Animated.Value(40),
             info: new Animated.Value(40),
-            more: new Animated.Value(40),
-            clicked: 1,
+            more: new Animated.Value(200),
+            clicked: 3,
             feed: 1,
             delaying: false,
             name: '어둠의 다크',
@@ -84,26 +84,26 @@ export default class ProfileGroups extends Component {
 
     render() {
         return (
-            <View style={styles.Container}>
-                <Animated.View style={{ width: this.state.profile, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+            <View style={styles1.Container}>
+                <Animated.View style={{ width: this.state.profile, height: 120, shadowColor: "#000", ...styles1.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openProfile()}>
-                        <LinearGradient style={styles.BoxContainer} colors={[Colors.lightRed, Colors.lightBlue]} start={[0, 0]} end={[1, 1]}>
-                            <View style={styles.BoxTitle}>
+                        <LinearGradient style={styles1.BoxContainer} colors={[Colors.lightRed, Colors.lightBlue]} start={[0, 0]} end={[1, 1]}>
+                            <View style={styles1.BoxTitle}>
                                 <User color="red" />
                             </View>
-                            {this.state.clicked == 1 && !this.state.delaying ? <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { changeProfile: this._changeProfileData })} style={styles.Content}>
-                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>학번</Text><Text style={styles.ContentValue1}>{this.state.number}</Text></View>
-                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>닉네임</Text><Text style={styles.ContentValue1}>{this.state.name}</Text></View>
-                                <View style={styles.ContentView}><Text style={styles.ContentTitle}>등급</Text><Text style={styles.ContentValue1}>{_rank}</Text></View>
+                            {this.state.clicked == 1 && !this.state.delaying ? <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { changeProfile: this._changeProfileData })} style={styles1.Content}>
+                                <View style={styles1.ContentView}><Text style={styles1.ContentTitle}>학번</Text><Text style={styles1.ContentValue1}>{this.state.number}</Text></View>
+                                <View style={styles1.ContentView}><Text style={styles1.ContentTitle}>닉네임</Text><Text style={styles1.ContentValue1}>{this.state.name}</Text></View>
+                                <View style={styles1.ContentView}><Text style={styles1.ContentTitle}>등급</Text><Text style={styles1.ContentValue1}>{_rank}</Text></View>
                             </TouchableOpacity> : null}
                         </LinearGradient>
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.info, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.info, height: 120, shadowColor: "#000", ...styles1.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openInfo()}>
-                        <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
-                            <View style={styles.BoxTitle}>
+                        <LinearGradient style={styles1.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
+                            <View style={styles1.BoxTitle}>
                                 <View style={{ width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}>
                                     <Bell />
                                     {this.state.feed > 0 ? <View style={{
@@ -113,27 +113,27 @@ export default class ProfileGroups extends Component {
                                 </View>
                             </View>
                             {this.state.clicked == 2 && !this.state.delaying ?
-                                <View style={styles.Content}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPost')} style={styles.ContentView}><Text style={styles.ContentTitle}>게시물</Text><Text style={styles.ContentValue2}>{_post}</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyComment')} style={styles.ContentView}><Text style={styles.ContentTitle}>댓글</Text><Text style={styles.ContentValue2}>{_commnet}</Text></TouchableOpacity>
-                                    <TouchableOpacity style={styles.ContentView} onPress={this._feedHandle}><Text style={styles.ContentTitle}>새알림</Text><Text style={styles.ContentValue2}>{this.state.feed}</Text></TouchableOpacity>
+                                <View style={styles1.Content}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPost')} style={styles1.ContentView}><Text style={styles1.ContentTitle}>게시물</Text><Text style={styles1.ContentValue2}>{_post}</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('MyComment')} style={styles1.ContentView}><Text style={styles1.ContentTitle}>댓글</Text><Text style={styles1.ContentValue2}>{_commnet}</Text></TouchableOpacity>
+                                    <TouchableOpacity style={styles1.ContentView} onPress={this._feedHandle}><Text style={styles1.ContentTitle}>새알림</Text><Text style={styles1.ContentValue2}>{this.state.feed}</Text></TouchableOpacity>
                                 </View> :
                                 <Text style={{ color: 'white', fontFamily: 'nanumbarungothic', fontSize: 16, textAlign: 'center', marginTop: 46 }}>{this.state.feed > 0 && !this.state.delaying ? this.state.feed : null}</Text>}
                         </LinearGradient>
                     </TouchableWithoutFeedback>
                 </Animated.View>
 
-                <Animated.View style={{ width: this.state.more, height: 120, shadowColor: "#000", ...styles.IosShadow }}>
+                <Animated.View style={{ width: this.state.more, height: 120, shadowColor: "#000", ...styles1.IosShadow }}>
                     <TouchableWithoutFeedback style={{ width: '100%', height: '100%' }} onPress={() => this._openMore()}>
-                        <LinearGradient style={styles.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
-                            <View style={styles.BoxTitle}>
+                        <LinearGradient style={styles1.BoxContainer} colors={['#FCBEC0', '#C2C7FB']} start={[0, 0]} end={[1, 1]}>
+                            <View style={styles1.BoxTitle}>
                                 <Plus />
                             </View>
                             {this.state.clicked == 3 && !this.state.delaying ?
-                                <View style={styles.Content}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Bookmark')} style={styles.ContentView}><Text style={styles.ContentTitle}>북마크</Text><BookMark style={styles.contentValue3} /></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Search')} style={styles.ContentView}><Text style={styles.ContentTitle}>검색</Text><Search style={styles.contentValue3} /></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')} style={styles.ContentView}><Text style={styles.ContentTitle}>글쓰기</Text><PlusWhite style={styles.contentValue3} /></TouchableOpacity>
+                                <View style={styles1.Content}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Bookmark')} style={styles1.ContentView}><Text style={styles1.ContentTitle}>북마크</Text><BookMark style={styles1.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Search')} style={styles1.ContentView}><Text style={styles1.ContentTitle}>검색</Text><Search style={styles1.contentValue3} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Post')} style={styles1.ContentView}><Text style={styles1.ContentTitle}>글쓰기</Text><PlusWhite style={styles1.contentValue3} /></TouchableOpacity>
                                 </View> : null}
                         </LinearGradient>
                     </TouchableWithoutFeedback>
@@ -144,7 +144,7 @@ export default class ProfileGroups extends Component {
 }
 
 
-const styles = StyleSheet.create({
+const styles1 = StyleSheet.create({
     Container: {
         flex: 1,
         width: '100%',
