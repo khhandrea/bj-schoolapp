@@ -1,0 +1,7 @@
+type Menu {
+    lunch: [String]!
+}
+
+type Query {
+    menu(month: Int, date: Int) : Menu!
+}

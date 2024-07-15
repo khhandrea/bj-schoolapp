@@ -1,0 +1,22 @@
+{
+  "name": "schoolMealQL",
+  "version": "1.0.0",
+  "description": "School Meal API",
+  "main": "index.js",
+  "author": "khhandrea@naver.com Kim Hwan Hee",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-micro": "^2.5.1",
+    "graphql": "^14.3.1",
+    "graphql-yoga": "^1.17.4",
+    "node-fetch": "^2.5.0"
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1"
+  }
+}
